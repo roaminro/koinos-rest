@@ -1,3 +1,4 @@
+'use client'
 import SwaggerUI from 'swagger-ui-react'
 import 'swagger-ui-react/swagger-ui.css'
 import SwaggerJson from '@/public/swagger.json'
