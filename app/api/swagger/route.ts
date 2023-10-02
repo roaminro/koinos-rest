@@ -1,6 +1,5 @@
-import { createSwaggerSpec } from 'next-swagger-doc'
-import SwaggerSpecs from '@/swagger.specs.json'
+import SwaggerJson from '@/public/swagger.json'
 
 export function GET() {
-  return Response.json(createSwaggerSpec(SwaggerSpecs))
+  return Response.json(SwaggerJson)
 }

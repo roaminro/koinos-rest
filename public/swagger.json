@@ -1,0 +1,576 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Koinos REST API",
+    "version": "0.1.0"
+  },
+  "components": {
+    "schemas": {
+      "ContractAbi": {
+        "type": "object",
+        "properties": {
+          "contract_id": {
+            "type": "string"
+          },
+          "abi": {
+            "type": "string"
+          }
+        }
+      },
+      "FtInfo": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "decimals": {
+            "type": "number"
+          },
+          "total_supply": {
+            "type": "string"
+          }
+        }
+      },
+      "NftInfo": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "total_supply": {
+            "type": "string"
+          },
+          "uri": {
+            "type": "string"
+          }
+        }
+      },
+      "Value": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "security": [],
+  "paths": {
+    "/api/chain/head_info": {
+      "get": {
+        "tags": [
+          "Chain"
+        ],
+        "description": "Returns the chain's head info",
+        "responses": {
+          "200": {
+            "description": "Value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chain/id": {
+      "get": {
+        "tags": [
+          "Chain"
+        ],
+        "description": "Returns the chain id",
+        "responses": {
+          "200": {
+            "description": "Value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/contracts/{contract_id}/abi": {
+      "get": {
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Returns the contract's ABI",
+        "parameters": [
+          {
+            "name": "contract_id",
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "Koinos address of the contract, name of the contract (for system contracts) or KAP name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contract Abi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContractAbi"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/contracts/{contract_id}/read/{method}": {
+      "get": {
+        "tags": [
+          "Contracts"
+        ],
+        "description": "Read the contract contract using the method and arguments provided",
+        "parameters": [
+          {
+            "name": "contract_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Koinos address of the contract, name of the contract (for system contracts) or KAP name",
+            "required": true
+          },
+          {
+            "name": "method",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Method of the contract to call",
+            "required": true
+          },
+          {
+            "name": "arguments",
+            "in": "query",
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Call response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fts/{contract_id}/balance/{account}": {
+      "get": {
+        "tags": [
+          "Fungible Tokens"
+        ],
+        "description": "Returns the fungible token's total supply",
+        "parameters": [
+          {
+            "name": "contract_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Koinos address of the contract, name of the contract (for system contracts) or KAP name",
+            "required": true
+          },
+          {
+            "name": "account",
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "Koinos address of the account, name of the account (for system contracts) or KAP name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fts/{contract_id}/decimals": {
+      "get": {
+        "tags": [
+          "Fungible Tokens"
+        ],
+        "description": "Returns the fungible token's decimals",
+        "parameters": [
+          {
+            "name": "contract_id",
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "description": "Koinos address of the contract, name of the contract (for system contracts) or KAP name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fts/{contract_id}/info": {
+      "get": {
+        "tags": [
+          "Fungible Tokens"
+        ],
+        "description": "Returns the fungible token's info",
+        "parameters": [
+          {
+            "name": "contract_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Koinos address of the contract, name of the contract (for system contracts) or KAP name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "FtInfo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FtInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fts/{contract_id}/name": {
+      "get": {
+        "tags": [
+          "Fungible Tokens"
+        ],
+        "description": "Returns the fungible token's name",
+        "parameters": [
+          {
+            "name": "contract_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Koinos address of the contract, name of the contract (for system contracts) or KAP name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fts/{contract_id}/symbol": {
+      "get": {
+        "tags": [
+          "Fungible Tokens"
+        ],
+        "description": "Returns the fungible token's symbol",
+        "parameters": [
+          {
+            "name": "contract_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Koinos address of the contract, name of the contract (for system contracts) or KAP name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fts/{contract_id}/total_supply": {
+      "get": {
+        "tags": [
+          "Fungible Tokens"
+        ],
+        "description": "Returns the fungible token's total supply",
+        "parameters": [
+          {
+            "name": "contract_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Koinos address of the contract, name of the contract (for system contracts) or KAP name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nfts/{contract_id}/balance/{account}": {
+      "get": {
+        "tags": [
+          "Non Fungible Tokens"
+        ],
+        "description": "Returns the non fungible token's account balance",
+        "parameters": [
+          {
+            "name": "contract_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Koinos address of the contract, name of the contract (for system contracts) or KAP name",
+            "required": true
+          },
+          {
+            "name": "account",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Koinos address of the account, name of the account (for system contracts) or KAP name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nfts/{contract_id}/info": {
+      "get": {
+        "tags": [
+          "Non Fungible Tokens"
+        ],
+        "description": "Returns the non fungible token's info",
+        "parameters": [
+          {
+            "name": "contract_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Koinos address of the contract, name of the contract (for system contracts) or KAP name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "NftInfo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NftInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nfts/{contract_id}/name": {
+      "get": {
+        "tags": [
+          "Non Fungible Tokens"
+        ],
+        "description": "Returns the non fungible token's name",
+        "parameters": [
+          {
+            "name": "contract_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Koinos address of the contract, name of the contract (for system contracts) or KAP name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nfts/{contract_id}/symbol": {
+      "get": {
+        "tags": [
+          "Non Fungible Tokens"
+        ],
+        "description": "Returns the non fungible token's symbol",
+        "parameters": [
+          {
+            "name": "contract_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Koinos address of the contract, name of the contract (for system contracts) or KAP name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nfts/{contract_id}/total_supply": {
+      "get": {
+        "tags": [
+          "Non Fungible Tokens"
+        ],
+        "description": "Returns the non fungible token's total supply",
+        "parameters": [
+          {
+            "name": "contract_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Koinos address of the contract, name of the contract (for system contracts) or KAP name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/nfts/{contract_id}/uri": {
+      "get": {
+        "tags": [
+          "Non Fungible Tokens"
+        ],
+        "description": "Returns the non fungible token's uri",
+        "parameters": [
+          {
+            "name": "contract_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Koinos address of the contract, name of the contract (for system contracts) or KAP name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Value"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": []
+}
