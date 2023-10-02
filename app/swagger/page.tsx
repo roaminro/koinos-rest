@@ -1,10 +1,11 @@
-import ReactSwagger from './react-swagger'
+import SwaggerUI from 'swagger-ui-react'
+import 'swagger-ui-react/swagger-ui.css'
 import SwaggerJson from '@/public/swagger.json'
 
-export default async function IndexPage() {
+export default function IndexPage() {
   return (
     <section className="container">
-      <ReactSwagger spec={SwaggerJson} />
+      <SwaggerUI spec={SwaggerJson} />
     </section>
   )
 }
