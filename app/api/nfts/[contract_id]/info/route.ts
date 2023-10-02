@@ -12,6 +12,8 @@ import { utils } from 'koilib'
  *     parameters:
  *      - name: contract_id
  *        in: path
+ *        schema:
+ *          type: string
  *        description: Koinos address of the contract, name of the contract (for system contracts) or KAP name
  *        required: true
  *     responses:

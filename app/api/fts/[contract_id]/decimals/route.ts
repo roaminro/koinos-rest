@@ -10,6 +10,8 @@ import { getFTContract } from '@/utils/tokens'
  *     description: Returns the fungible token's decimals
  *     parameters:
  *      - name: contract_id
+ *        schema:
+ *          type: string
  *        in: path
  *        description: Koinos address of the contract, name of the contract (for system contracts) or KAP name
  *        required: true

@@ -11,6 +11,8 @@ import { handleError } from '@/utils/errors'
  *     description: Returns the contract's ABI
  *     parameters:
  *      - name: contract_id
+ *        schema:
+ *          type: string
  *        in: path
  *        description: Koinos address of the contract, name of the contract (for system contracts) or KAP name
  *        required: true

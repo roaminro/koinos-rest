@@ -13,10 +13,14 @@ import { AppError, handleError, getErrorMessage } from '@/utils/errors'
  *     parameters:
  *      - name: contract_id
  *        in: path
+ *        schema:
+ *          type: string
  *        description: Koinos address of the contract, name of the contract (for system contracts) or KAP name
  *        required: true
  *      - name: method
  *        in: path
+ *        schema:
+ *          type: string
  *        description: Method of the contract to call
  *        required: true
  *      - name: arguments
@@ -26,7 +30,10 @@ import { AppError, handleError, getErrorMessage } from '@/utils/errors'
  *     responses:
  *       200:
  *        description: Call response
- *        type: application/json
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
  */
 export async function GET(
   request: Request,
