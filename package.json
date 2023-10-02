@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@roamin/koinos-pb-to-proto": "^0.0.3",
+    "encoding": "^0.1.13",
     "koilib": "^5.6.1",
     "next": "latest",
     "next-swagger-doc": "^0.4.0",
