@@ -10,3 +10,5 @@ export default function IndexPage() {
     </section>
   )
 }
+
+export const dynamic = 'force-dynamic'
