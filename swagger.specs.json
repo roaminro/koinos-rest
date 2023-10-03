@@ -7,7 +7,18 @@
       "title": "Koinos REST API",
       "version": "0.1.0"
     },
-    "components": {},
+    "components": {
+      "parameters": {
+        "X-JSON-RPC-URL": {
+          "name": "X-JSON-RPC-URL",
+          "schema": {
+            "type": "string"
+          },
+          "in": "header",
+          "description": "Override default JSON RPC URL used for querying the blockchain"
+        }
+      }
+    },
     "security": []
   }
 }

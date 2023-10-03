@@ -1,6 +1,5 @@
-import { config } from '@/app.config'
 import { AppError, getErrorMessage, handleError } from '@/utils/errors'
-import { Provider } from 'koilib'
+import { getProvider } from '@/utils/providers'
 
 /**
  * @swagger
@@ -8,6 +7,8 @@ import { Provider } from 'koilib'
  *   get:
  *     tags: [Chain]
  *     description: Returns the chain id
+ *     parameters:
+ *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
  *        description: Value
@@ -18,7 +19,7 @@ import { Provider } from 'koilib'
  */
 export async function GET(request: Request, { params }: { params: { contract_id: string } }) {
   try {
-    const provider = new Provider(config.jsonRPC)
+    const provider = getProvider()
 
     try {
       const chainId = await provider.getChainId()

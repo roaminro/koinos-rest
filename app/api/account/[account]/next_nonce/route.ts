@@ -1,7 +1,6 @@
-import { config } from '@/app.config'
 import { getAddress } from '@/utils/addresses'
 import { AppError, getErrorMessage, handleError } from '@/utils/errors'
-import { Provider } from 'koilib'
+import { getProvider } from '@/utils/providers'
 
 /**
  * @swagger
@@ -16,6 +15,7 @@ import { Provider } from 'koilib'
  *        in: path
  *        description: Koinos address of the account, name of the account (for system contracts) or KAP name
  *        required: true
+ *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
  *        description: Value
@@ -26,8 +26,9 @@ import { Provider } from 'koilib'
  */
 export async function GET(request: Request, { params }: { params: { account: string } }) {
   try {
-    const provider = new Provider(config.jsonRPC)
+    const provider = getProvider()
     const account = await getAddress(params.account)
+
     try {
       const nextNonce = await provider.getNextNonce(account)
       return Response.json({

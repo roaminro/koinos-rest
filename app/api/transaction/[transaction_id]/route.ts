@@ -1,7 +1,5 @@
-import { Provider } from 'koilib'
-import { config } from '@/app.config'
-import { getContractId } from '@/utils/contracts'
 import { AppError, handleError } from '@/utils/errors'
+import { getProvider } from '@/utils/providers'
 
 /**
  * @swagger
@@ -16,6 +14,7 @@ import { AppError, handleError } from '@/utils/errors'
  *        in: path
  *        description: The id of the transaction
  *        required: true
+ *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
  *        description: Transaction
@@ -26,7 +25,7 @@ import { AppError, handleError } from '@/utils/errors'
  */
 export async function GET(request: Request, { params }: { params: { transaction_id: string } }) {
   try {
-    const provider = new Provider(config.jsonRPC)
+    const provider = getProvider()
 
     const response = await provider.getTransactionsById([params.transaction_id])
 

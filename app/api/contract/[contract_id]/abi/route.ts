@@ -1,7 +1,6 @@
-import { Provider } from 'koilib'
-import { config } from '@/app.config'
 import { getContractId } from '@/utils/contracts'
 import { handleError } from '@/utils/errors'
+import { getProvider } from '@/utils/providers'
 
 /**
  * @swagger
@@ -15,7 +14,8 @@ import { handleError } from '@/utils/errors'
  *          type: string
  *        in: path
  *        description: Koinos address of the contract, name of the contract (for system contracts) or KAP name
- *        required: truereturn Response.json(response.transactions[0])
+ *        required: true
+ *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *      200:
  *        description: Contract Abi
@@ -27,7 +27,7 @@ import { handleError } from '@/utils/errors'
 export async function GET(request: Request, { params }: { params: { contract_id: string } }) {
   try {
     const contract_id = await getContractId(params.contract_id)
-    const provider = new Provider(config.jsonRPC)
+    const provider = getProvider()
 
     const response = (await provider.call('contract_meta_store.get_contract_meta', {
       contract_id

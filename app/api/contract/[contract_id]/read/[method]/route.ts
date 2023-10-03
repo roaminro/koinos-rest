@@ -1,8 +1,8 @@
-import { Contract, Provider } from 'koilib'
-import { config } from '@/app.config'
+import { Contract } from 'koilib'
 import { fixAbi, getContractId, processArgs } from '@/utils/contracts'
 import qs from 'qs'
 import { AppError, handleError, getErrorMessage } from '@/utils/errors'
+import { getProvider } from '@/utils/providers'
 
 /**
  * @swagger
@@ -27,6 +27,7 @@ import { AppError, handleError, getErrorMessage } from '@/utils/errors'
  *        in: query
  *        schema:
  *          type: object
+ *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
  *        description: Call response
@@ -54,7 +55,7 @@ export async function GET(
       args = qs.parse(search, { allowDots: true })
     }
 
-    const provider = new Provider(config.jsonRPC)
+    const provider = getProvider()
 
     let contract = new Contract({
       id: contract_id,
@@ -121,6 +122,7 @@ export async function GET(
  *          type: string
  *        description: Method of the contract to call
  *        required: true
+ *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     requestBody:
  *      description: Arguments
  *      content:
@@ -145,7 +147,7 @@ export async function POST(
     const method = params.method
     let args = await request.json()
 
-    const provider = new Provider(config.jsonRPC)
+    const provider = getProvider()
 
     let contract = new Contract({
       id: contract_id,

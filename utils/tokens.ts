@@ -1,9 +1,9 @@
-import { Provider, Contract, utils } from 'koilib'
-import { config } from '@/app.config'
+import { Contract, utils } from 'koilib'
 import nftAbi from '@/abis/nft.json'
+import { getProvider } from './providers'
 
 export function getFTContract(id: string) {
-  const provider = new Provider(config.jsonRPC)
+  const provider = getProvider()
 
   return new Contract({
     id,
@@ -13,7 +13,7 @@ export function getFTContract(id: string) {
 }
 
 export function getNFTContract(id: string) {
-  const provider = new Provider(config.jsonRPC)
+  const provider = getProvider()
 
   return new Contract({
     id,

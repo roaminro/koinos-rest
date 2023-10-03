@@ -21,6 +21,7 @@ import { getNFTContract } from '@/utils/tokens'
  *          type: string
  *        description: Koinos address of the account, name of the account (for system contracts) or KAP name
  *        required: true
+ *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
  *        description: Value

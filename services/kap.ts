@@ -1,6 +1,7 @@
-import { Contract, Provider } from 'koilib'
+import { Contract } from 'koilib'
 import KapAbi from '@/abis/kap.json'
 import { config } from '@/app.config'
+import { getProvider } from '@/utils/providers'
 
 type KapName = {
   owner: string
@@ -15,7 +16,7 @@ function getContract(): Contract {
     id: config.contracts.kap,
     // @ts-ignore abi is compatible
     abi: KapAbi,
-    provider: new Provider(config.jsonRPC)
+    provider: getProvider()
   })
 }
 

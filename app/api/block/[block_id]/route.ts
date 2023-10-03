@@ -1,7 +1,6 @@
-import { Provider, interfaces } from 'koilib'
-import { config } from '@/app.config'
-import { getContractId } from '@/utils/contracts'
+import { interfaces } from 'koilib'
 import { AppError, handleError } from '@/utils/errors'
+import { getProvider } from '@/utils/providers'
 
 /**
  * @swagger
@@ -15,18 +14,18 @@ import { AppError, handleError } from '@/utils/errors'
  *          type: string
  *        in: path
  *        description: The block id or number
+ *        required: true
  *      - name: return_block
  *        schema:
  *          type: boolean
- *          default: true
  *        in: query
  *        description: Wether or not the block content should be returned
  *      - name: return_receipt
  *        schema:
  *          type: boolean
- *          default: true
  *        in: query
  *        description: Wether or not the receipts content should be returned
+ *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
  *        description: Block
@@ -37,7 +36,7 @@ import { AppError, handleError } from '@/utils/errors'
  */
 export async function GET(request: Request, { params }: { params: { block_id: string } }) {
   try {
-    const provider = new Provider(config.jsonRPC)
+    const provider = getProvider()
 
     const { searchParams } = new URL(request.url)
     const return_block = searchParams.get('return_block') !== 'false'
