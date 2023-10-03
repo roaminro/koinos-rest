@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "yarn next-swagger-doc-cli swagger.specs.json && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -18,7 +18,7 @@
     "qs": "^6.11.2",
     "react": "latest",
     "react-dom": "latest",
-    "swagger-ui-react": "^5.9.0"
+    "swagger-ui-react": "5.3.2"
   },
   "devDependencies": {
     "@types/node": "latest",
