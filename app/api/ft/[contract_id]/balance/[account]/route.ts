@@ -1,3 +1,4 @@
+import { getAccountAddress } from '@/utils/addresses'
 import { getContractId } from '@/utils/contracts'
 import { AppError, getErrorMessage, handleError } from '@/utils/errors'
 import { getFTContract } from '@/utils/tokens'
@@ -38,7 +39,7 @@ export async function GET(
     const contract_id = await getContractId(params.contract_id)
     const contract = getFTContract(contract_id)
 
-    const account = await getContractId(params.account)
+    const account = await getAccountAddress(params.account)
 
     try {
       const { result: balanceRes } = await contract.functions.balanceOf({
