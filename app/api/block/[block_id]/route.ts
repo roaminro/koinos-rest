@@ -15,7 +15,18 @@ import { AppError, handleError } from '@/utils/errors'
  *          type: string
  *        in: path
  *        description: The block id or number
- *        required: true
+ *      - name: return_block
+ *        schema:
+ *          type: boolean
+ *          default: true
+ *        in: query
+ *        description: Wether or not the block content should be returned
+ *      - name: return_receipt
+ *        schema:
+ *          type: boolean
+ *          default: true
+ *        in: query
+ *        description: Wether or not the receipts content should be returned
  *     responses:
  *       200:
  *        description: Block
@@ -28,6 +39,10 @@ export async function GET(request: Request, { params }: { params: { block_id: st
   try {
     const provider = new Provider(config.jsonRPC)
 
+    const { searchParams } = new URL(request.url)
+    const return_block = searchParams.get('return_block') !== 'false'
+    const return_receipt = searchParams.get('return_receipt') !== 'false'
+
     const block_id = params.block_id
     if (block_id.startsWith('0x')) {
       const blocks = await provider.call<{
@@ -37,8 +52,8 @@ export async function GET(request: Request, { params }: { params: { block_id: st
           block: interfaces.BlockJson
         }[]
       }>('block_store.get_blocks_by_id', {
-        return_block: true,
-        return_receipt: true,
+        return_block,
+        return_receipt,
         block_ids: [block_id]
       })
 
@@ -55,8 +70,8 @@ export async function GET(request: Request, { params }: { params: { block_id: st
           block: interfaces.BlockJson
         }[]
       }>('block_store.get_blocks_by_height', {
-        return_block: true,
-        return_receipt: true,
+        return_block,
+        return_receipt,
         num_blocks: 1,
         ancestor_start_height: block_id,
         head_block_id: (await provider.getHeadInfo()).head_topology.id
