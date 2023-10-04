@@ -43,7 +43,7 @@ export async function GET(
     const account = await getAccountAddress(params.account)
 
     try {
-      const { result: balanceRes } = await contract.functions.balanceOf({
+      const { result: balanceRes } = await contract.functions.balance_of({
         owner: account
       })
       const { result: decimalRes } = await contract.functions.decimals()
