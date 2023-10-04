@@ -82,7 +82,11 @@ export async function GET(request: Request, { params }: { params: { transaction_
 
         if (receipt) {
           if (decode_events && receipt.events) {
-            receipt.events = await decodeEvents(receipt.events)
+            try {
+              receipt.events = await decodeEvents(receipt.events)
+            } catch (error) {
+              // ignore decoding errors
+            }
           }
 
           // @ts-ignore dynamically add the receipt to result
@@ -92,9 +96,13 @@ export async function GET(request: Request, { params }: { params: { transaction_
     }
 
     if (decode_operations && transaction.transaction.operations) {
-      transaction.transaction.operations = await decodeOperations(
-        transaction.transaction.operations
-      )
+      try {
+        transaction.transaction.operations = await decodeOperations(
+          transaction.transaction.operations
+        )
+      } catch (error) {
+        // ignore decoding errors
+      }
     }
 
     return Response.json(transaction)
