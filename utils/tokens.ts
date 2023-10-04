@@ -1,4 +1,5 @@
-import { Contract, utils } from 'koilib'
+import { Contract } from 'koilib'
+import ftAbi from '@/abis/ft.json'
 import nftAbi from '@/abis/nft.json'
 import { getProvider } from './providers'
 
@@ -6,7 +7,8 @@ export function getFTContract(id: string) {
   return new Contract({
     id,
     provider: getProvider(),
-    abi: utils.tokenAbi
+    // @ts-ignore
+    abi: ftAbi
   })
 }
 
