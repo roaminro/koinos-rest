@@ -17,7 +17,7 @@ import { getProvider } from '@/utils/providers'
  *            schema:
  *              $ref: '#/components/schemas/ResourceLimits'
  */
-export async function GET(request: Request, { params }: { params: { contract_id: string } }) {
+export async function GET() {
   try {
     const provider = getProvider()
 

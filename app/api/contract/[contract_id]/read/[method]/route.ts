@@ -1,8 +1,6 @@
-import { Contract } from 'koilib'
-import { fixAbi, getContractId, processArgs } from '@/utils/contracts'
+import { getContract, getContractId, processArgs } from '@/utils/contracts'
 import qs from 'qs'
 import { AppError, handleError, getErrorMessage } from '@/utils/errors'
-import { getProvider } from '@/utils/providers'
 
 /**
  * @swagger
@@ -55,40 +53,19 @@ export async function GET(
       args = qs.parse(search, { allowDots: true })
     }
 
-    const provider = getProvider()
-
-    let contract = new Contract({
-      id: contract_id,
-      provider
-    })
-
     try {
-      // fetch abi from node
-      let abi = await contract.fetchAbi()
-
-      if (!abi) {
-        throw new AppError('contract abi not available')
-      }
+      const contract = await getContract(contract_id)
 
       if (!contract.functions[method]) {
         throw new AppError(`method "${method}" does not exist`)
       }
 
-      // fix abi incompatibilities
-      abi = fixAbi(abi)
-
-      contract = new Contract({
-        id: contract_id,
-        provider,
-        abi
-      })
-
       // process args
-      if (abi.methods[method].argument) {
+      if (contract.abi!.methods[method].argument) {
         args = await processArgs(
           args,
           contract.serializer?.root,
-          contract.serializer?.root.lookupType(abi.methods[method].argument!)
+          contract.serializer?.root.lookupType(contract.abi!.methods[method].argument!)
         )
       }
 
@@ -147,40 +124,19 @@ export async function POST(
     const method = params.method
     let args = await request.json()
 
-    const provider = getProvider()
-
-    let contract = new Contract({
-      id: contract_id,
-      provider
-    })
-
     try {
-      // fetch abi from node
-      let abi = await contract.fetchAbi()
-
-      if (!abi) {
-        throw new AppError('contract abi not available')
-      }
+      const contract = await getContract(contract_id)
 
       if (!contract.functions[method]) {
         throw new AppError(`method "${method}" does not exist`)
       }
 
-      // fix abi incompatibilities
-      abi = fixAbi(abi)
-
-      contract = new Contract({
-        id: contract_id,
-        provider,
-        abi
-      })
-
       // process args
-      if (abi.methods[method].argument) {
+      if (contract.abi!.methods[method].argument) {
         args = await processArgs(
           args,
           contract.serializer?.root,
-          contract.serializer?.root.lookupType(abi.methods[method].argument!)
+          contract.serializer?.root.lookupType(contract.abi!.methods[method].argument!)
         )
       }
 

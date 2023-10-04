@@ -1,7 +1,6 @@
-import { Contract } from 'koilib'
-import KapAbi from '@/abis/kap.json'
 import { config } from '@/app.config'
 import { getProvider } from '@/utils/providers'
+import { Contract } from 'koilib'
 
 type KapName = {
   owner: string

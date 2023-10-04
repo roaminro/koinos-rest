@@ -1,10 +1,12 @@
-import { config } from '@/app.config'
-import { getKAPName } from '@/services/kap'
 import { ProtoDescriptor, convert } from '@roamin/koinos-pb-to-proto'
-import { interfaces, utils } from 'koilib'
+import { Contract, interfaces, utils } from 'koilib'
 import { Root, Type, parse } from 'protobufjs'
 import { AppError } from './errors'
 import { getAddress } from './addresses'
+import { getProvider } from './providers'
+import { config } from '@/app.config'
+import { getFTContract } from './tokens'
+import KapAbi from '@/abis/kap.json'
 
 export async function getContractId(str: string) {
   let contract_id = str
@@ -76,7 +78,7 @@ async function processBType(value: unknown, bType: string): Promise<unknown> {
   }
 }
 
-const nativeTypes = [
+const NATIVE_PROTO_TYPES = [
   'double',
   'float',
   'int32',
@@ -125,7 +127,7 @@ export async function processArgs(
     if (rule === 'repeated') {
       args[name] = (args[name] as unknown[]).map(async (item) => {
         // custom objects
-        if (!nativeTypes.includes(type)) {
+        if (!NATIVE_PROTO_TYPES.includes(type)) {
           const protoBuf = protoRoot.lookupTypeOrEnum(type)
           if (!protoBuf.fields) {
             // it's an enum
@@ -142,7 +144,7 @@ export async function processArgs(
     }
 
     // custom objects
-    if (!nativeTypes.includes(type)) {
+    if (!NATIVE_PROTO_TYPES.includes(type)) {
       const protoBuf = protoRoot.lookupTypeOrEnum(type)
       if (!protoBuf.fields) {
         // it's an enum
@@ -157,4 +159,65 @@ export async function processArgs(
   }
 
   return args
+}
+
+let CONTRACTS_CACHE: Record<string, Contract> | undefined
+
+function getContractsCache(contractId: string): Contract | undefined {
+  if (!CONTRACTS_CACHE) {
+    CONTRACTS_CACHE = {
+      [config.systemContracts.koin]: getFTContract(config.systemContracts.koin),
+      [config.systemContracts.vhp]: getFTContract(config.systemContracts.vhp),
+      [config.contracts.kap]: new Contract({
+        id: config.contracts.kap,
+        // @ts-ignore abi is compatible
+        abi: KapAbi,
+        provider: getProvider()
+      })
+    }
+  }
+
+  return CONTRACTS_CACHE[contractId]
+}
+
+function setContractsCache(contractId: string, contract: Contract) {
+  CONTRACTS_CACHE![contractId] = contract
+}
+
+export async function getContract(contractId: string, throwIfAbiMissing = true) {
+  let contract = getContractsCache(contractId)
+  if (contract) {
+    if (throwIfAbiMissing && !contract.abi) {
+      throw new AppError(`abi not available for contract ${contractId}`)
+    }
+
+    return contract
+  }
+
+  contract = new Contract({
+    id: contractId,
+    provider: getProvider()
+  })
+
+  // fetch abi from node
+  let abi = await contract.fetchAbi()
+
+  if (throwIfAbiMissing && !abi) {
+    throw new AppError(`abi not available for contract ${contractId}`)
+  }
+
+  if (abi) {
+    // fix abi incompatibilities
+    abi = fixAbi(abi)
+
+    contract = new Contract({
+      id: contractId,
+      provider: getProvider(),
+      abi
+    })
+  }
+
+  setContractsCache(contractId, contract)
+
+  return contract
 }
