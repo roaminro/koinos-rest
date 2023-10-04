@@ -1,5 +1,5 @@
 import { getContractId } from '@/utils/contracts'
-import { handleError } from '@/utils/errors'
+import { AppError, handleError } from '@/utils/errors'
 import { getProvider } from '@/utils/providers'
 
 /**
@@ -33,7 +33,13 @@ export async function GET(request: Request, { params }: { params: { contract_id:
       contract_id
     })) as any
 
-    return Response.json({ contract_id, ...response.meta })
+    if (!response.meta) {
+      throw new AppError(`abi not available for contract ${contract_id}`)
+    }
+
+    console.log(response)
+
+    return Response.json({ contract_id, ...response.meta, abi: JSON.parse(response.meta.abi) })
   } catch (error) {
     return handleError(error as Error)
   }
