@@ -102,22 +102,14 @@ export async function GET(request: Request, { params }: { params: { block_id: st
 
     if (block.receipt && decode_events) {
       if (block.receipt.events) {
-        try {
-          block.receipt.events = await decodeEvents(block.receipt.events)
-        } catch (error) {
-          // ignore decoding errors
-        }
+        block.receipt.events = await decodeEvents(block.receipt.events)
       }
 
       if (block.receipt.transaction_receipts) {
         for (let index = 0; index < block.receipt.transaction_receipts.length; index++) {
           const receipt = block.receipt.transaction_receipts[index]
           if (receipt.events) {
-            try {
-              block.receipt.transaction_receipts[index].events = await decodeEvents(receipt.events)
-            } catch (error) {
-              // ignore decoding errors
-            }
+            block.receipt.transaction_receipts[index].events = await decodeEvents(receipt.events)
           }
         }
       }
@@ -128,13 +120,9 @@ export async function GET(request: Request, { params }: { params: { block_id: st
         const transaction = block.block.transactions[index]
 
         if (transaction.operations) {
-          try {
-            block.block.transactions[index].operations = await decodeOperations(
-              transaction.operations
-            )
-          } catch (error) {
-            // ignore decoding errors
-          }
+          block.block.transactions[index].operations = await decodeOperations(
+            transaction.operations
+          )
         }
       }
     }

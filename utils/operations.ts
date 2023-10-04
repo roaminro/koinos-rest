@@ -8,16 +8,20 @@ export async function decodeOperations(operations: interfaces.OperationJson[]) {
       const contract = await getContract(operation.call_contract.contract_id, false)
 
       if (contract && contract.functions) {
-        const decodedOp = await contract.decodeOperation(operation)
+        try {
+          const decodedOp = await contract.decodeOperation(operation)
 
-        operations[index] = {
-          call_contract: {
-            contract_id: operation.call_contract.contract_id,
-            // @ts-ignore override type
-            entry_point: decodedOp.name,
-            // @ts-ignore override type
-            args: decodedOp.args
+          operations[index] = {
+            call_contract: {
+              contract_id: operation.call_contract.contract_id,
+              // @ts-ignore override type
+              entry_point: decodedOp.name,
+              // @ts-ignore override type
+              args: decodedOp.args
+            }
           }
+        } catch (error) {
+          // ignore decoding errors
         }
       }
     }

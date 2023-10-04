@@ -7,15 +7,19 @@ export async function decodeEvents(events: interfaces.EventData[]) {
     const contract = await getContract(event.source, false)
 
     if (contract && contract.functions) {
-      const decodedEvent = await contract.decodeEvent(event)
+      try {
+        const decodedEvent = await contract.decodeEvent(event)
 
-      events[index] = {
-        sequence: decodedEvent.sequence,
-        source: decodedEvent.source,
-        name: decodedEvent.name,
-        // @ts-ignore
-        data: decodedEvent.args,
-        impacted: decodedEvent.impacted
+        events[index] = {
+          sequence: decodedEvent.sequence,
+          source: decodedEvent.source,
+          name: decodedEvent.name,
+          // @ts-ignore
+          data: decodedEvent.args,
+          impacted: decodedEvent.impacted
+        }
+      } catch (error) {
+        // ignore decoding errors
       }
     }
   }
