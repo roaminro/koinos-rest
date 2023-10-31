@@ -3,7 +3,7 @@ import { AppError, handleError } from "@/utils/errors";
 import { decodeEvents } from "@/utils/events";
 import { decodeOperations } from "@/utils/operations";
 import { getProvider } from "@/utils/providers";
-import { interfaces, Signer, Transaction } from "koilib";
+import { interfaces, Transaction } from "koilib";
 
 /**
  * @swagger
@@ -115,15 +115,25 @@ export async function POST(
   try {
     // const signer = Signer.fromSeed("dummy_signer");
 
-    const preparedTransaction = await Transaction.prepareTransaction(params);
+    let preparedTransaction = await Transaction.prepareTransaction(params);
+
+    preparedTransaction.id = "";
+
+    preparedTransaction.header!.operation_merkle_root = "";
+
+    preparedTransaction.header!.chain_id =
+      "EiBZK_GGVP0H_fXVAM3j6EAuz3-B-l3ejxRSewi7qIBfSA==";
 
     // If payer exists, set rc limit and nonce
-    if (preparedTransaction.header?.payer !== undefined) {
-      preparedTransaction.header!.rc_limit = "1000";
-      preparedTransaction.header!.nonce = "1";
+    if (
+      preparedTransaction.header?.payer &&
+      preparedTransaction.header?.payer !== undefined
+    ) {
+      preparedTransaction.header!.rc_limit = "";
+      preparedTransaction.header!.nonce = "";
     }
 
-    console.log(preparedTransaction);
+    // console.log(preparedTransaction);
 
     return Response.json(preparedTransaction);
   } catch (error) {
