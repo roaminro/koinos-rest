@@ -70,23 +70,30 @@ export async function GET(request: Request, { params }: { params: { transaction_
           }
         }[]
       }>('block_store.get_blocks_by_id', {
-        return_block: false,
+        return_block: true,
         return_receipt: true,
-        block_ids: [transaction.containing_blocks[0]]
+        block_ids: transaction.containing_blocks
       })
 
       if (blocks.block_items.length) {
-        const receipt = blocks.block_items[0].receipt.transaction_receipts.find(
-          (receipt) => receipt.id === transaction.transaction.id
-        )
+        for (const blockItem of blocks.block_items) {
+          if (blockItem.block !== undefined) {
+            // @ts-ignore dynamically add the timestamp field to result
+            transaction.transaction.timestamp = blockItem.block.header!.timestamp!
 
-        if (receipt) {
-          if (decode_events && receipt.events) {
-            receipt.events = await decodeEvents(receipt.events)
+            const receipt = blockItem.receipt.transaction_receipts.find(
+              (receipt) => receipt.id === transaction.transaction.id
+            )
+
+            if (receipt) {
+              if (decode_events && receipt.events) {
+                receipt.events = await decodeEvents(receipt.events)
+              }
+
+              // @ts-ignore dynamically add the receipt to result
+              transaction.receipt = receipt
+            }
           }
-
-          // @ts-ignore dynamically add the receipt to result
-          transaction.receipt = receipt
         }
       }
     }
