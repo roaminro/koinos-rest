@@ -107,36 +107,3 @@ export async function GET(
     return handleError(error as Error);
   }
 }
-
-export async function POST(
-  request: Request,
-  { params }: { params: interfaces.TransactionJson }
-) {
-  try {
-    // const signer = Signer.fromSeed("dummy_signer");
-
-    let preparedTransaction = await Transaction.prepareTransaction(params);
-
-    preparedTransaction.id = "";
-
-    preparedTransaction.header!.operation_merkle_root = "";
-
-    preparedTransaction.header!.chain_id =
-      "EiBZK_GGVP0H_fXVAM3j6EAuz3-B-l3ejxRSewi7qIBfSA==";
-
-    // If payer exists, set rc limit and nonce
-    if (
-      preparedTransaction.header?.payer &&
-      preparedTransaction.header?.payer !== undefined
-    ) {
-      preparedTransaction.header!.rc_limit = "";
-      preparedTransaction.header!.nonce = "";
-    }
-
-    // console.log(preparedTransaction);
-
-    return Response.json(preparedTransaction);
-  } catch (error) {
-    return handleError(error as Error);
-  }
-}
