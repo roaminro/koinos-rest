@@ -1,5 +1,5 @@
 import { AppError, getErrorMessage, handleError } from '@/utils/errors'
-import { interfaces, Transaction } from 'koilib'
+import { interfaces } from 'koilib'
 import { getProvider } from '@/utils/providers'
 
 /**
@@ -33,10 +33,7 @@ import { getProvider } from '@/utils/providers'
  *              type: object
  */
 
-export async function POST(
-  request: Request
-  // { params }: { params: { transaction_id: interfaces.TransactionJson; broadcast_value: boolean } }
-) {
+export async function POST(request: Request) {
   try {
     // Get the JSON RPC provider
     const provider = getProvider()
@@ -53,7 +50,7 @@ export async function POST(
 
       return Response.json(result)
     } catch (error) {
-      return new AppError(getErrorMessage(error as Error))
+      throw new AppError(getErrorMessage(error as Error))
     }
   } catch (error) {
     return handleError(error as Error)

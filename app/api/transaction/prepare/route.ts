@@ -1,34 +1,42 @@
-import { handleError } from "@/utils/errors";
-import { interfaces, Transaction } from "koilib";
-import { getProvider } from "@/utils/providers";
+import { handleError } from '@/utils/errors'
+import { interfaces, Transaction } from 'koilib'
+import { getProvider } from '@/utils/providers'
 
-export async function POST(
-  request: Request,
-  { body }: { body: interfaces.TransactionJson }
-) {
-  const provider = getProvider();
+/**
+ * @swagger
+ * /api/transaction/prepare-transaction:
+ *   post:
+ *     tags: [Transactions]
+ *     description: This endpoint takes a transaction and an optional provider and/or payer, then returns a prepared transaction object.
+ *
+ *     requestBody:
+ *      description: Arguments
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *
+ *     responses:
+ *       200:
+ *        description: Call response
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ */
+
+export async function POST(request: Request) {
   try {
-    let preparedTransaction = await Transaction.prepareTransaction(body);
+    const provider = getProvider()
+    const transaction = (await request.json()) as interfaces.TransactionJson
+    const preparedTransaction = await Transaction.prepareTransaction(
+      transaction,
+      provider
+      // '1PWdJ3VFB6kwu6wLdLPr9BwQZrNiPs7g8j'
+    )
 
-    preparedTransaction.id = "";
-
-    preparedTransaction.header!.operation_merkle_root = "";
-
-    preparedTransaction.header!.chain_id = await provider.getChainId();
-
-    // If payer exists, set rc limit and nonce
-    if (
-      preparedTransaction.header?.payer &&
-      preparedTransaction.header?.payer !== undefined
-    ) {
-      preparedTransaction.header!.rc_limit = "";
-      preparedTransaction.header!.nonce = "";
-    }
-
-    // console.log(preparedTransaction);
-
-    return Response.json(preparedTransaction);
+    return Response.json(preparedTransaction)
   } catch (error) {
-    return handleError(error as Error);
+    return handleError(error as Error)
   }
 }
