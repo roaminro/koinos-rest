@@ -1,6 +1,8 @@
-import { AppError, getErrorMessage, handleError } from '@/utils/errors'
-import { interfaces } from 'koilib'
-import { getProvider } from '@/utils/providers'
+import { AppError, getErrorMessage, handleError } from "@/utils/errors";
+import { interfaces } from "koilib";
+import { getProvider } from "@/utils/providers";
+import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 
 /**
  * @swagger
@@ -33,26 +35,29 @@ import { getProvider } from '@/utils/providers'
  *              type: object
  */
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     // Get the JSON RPC provider
-    const provider = getProvider()
+    const provider = getProvider();
 
-    const transaction = (await request.json()) as interfaces.TransactionJson
+    const transaction = (await request.json()) as interfaces.TransactionJson;
 
     // /api/transaction/submit?broadcast=true
-    const { searchParams } = new URL(request.url)
-    const broadcast = searchParams.get('broadcast') !== 'false'
+    const { searchParams } = new URL(request.url);
+    const broadcast = searchParams.get("broadcast") !== "false";
 
     try {
       // Submit the transaction to the JSON RPC using the provider
-      const result = await provider.sendTransaction(transaction, broadcast)
+      const result = await provider.sendTransaction(transaction, broadcast);
 
-      return Response.json(result)
+      const submitPath = request.nextUrl.searchParams.get("submit") || "/";
+      revalidatePath(submitPath);
+
+      return NextResponse.json(result);
     } catch (error) {
-      throw new AppError(getErrorMessage(error as Error))
+      throw new AppError(getErrorMessage(error as Error));
     }
   } catch (error) {
-    return handleError(error as Error)
+    return handleError(error as Error);
   }
 }

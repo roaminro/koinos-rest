@@ -1,6 +1,8 @@
-import { handleError } from '@/utils/errors'
-import { interfaces, Transaction } from 'koilib'
-import { getProvider } from '@/utils/providers'
+import { AppError, getErrorMessage, handleError } from "@/utils/errors";
+import { interfaces, Transaction } from "koilib";
+import { getProvider } from "@/utils/providers";
+import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 
 /**
  * @swagger
@@ -25,18 +27,43 @@ import { getProvider } from '@/utils/providers'
  *              type: object
  */
 
-export async function POST(request: Request) {
-  try {
-    const provider = getProvider()
-    const transaction = (await request.json()) as interfaces.TransactionJson
-    const preparedTransaction = await Transaction.prepareTransaction(
-      transaction,
-      provider
-      // '1PWdJ3VFB6kwu6wLdLPr9BwQZrNiPs7g8j'
-    )
+// export async function POST(request: Request) {
+//   try {
+//     const provider = getProvider()
+//     const transaction = (await request.json()) as interfaces.TransactionJson
+//     const preparedTransaction = await Transaction.prepareTransaction(
+//       transaction,
+//       provider
+//       // '1PWdJ3VFB6kwu6wLdLPr9BwQZrNiPs7g8j'
+//     )
 
-    return Response.json(preparedTransaction)
+//     return Response.json(preparedTransaction)
+//   } catch (error) {
+//     return handleError(error as Error)
+//   }
+// }
+
+export async function POST(request: NextRequest) {
+  try {
+    try {
+      const provider = getProvider();
+      const transaction = (await request.json()) as interfaces.TransactionJson;
+
+      const preparedTransaction = await Transaction.prepareTransaction(
+        transaction,
+        provider
+        // '1PWdJ3VFB6kwu6wLdLPr9BwQZrNiPs7g8j'
+      );
+
+      const prepareTxPath =
+        request.nextUrl.searchParams.get("prepare-transaction") || "/";
+      revalidatePath(prepareTxPath);
+
+      return NextResponse.json(preparedTransaction);
+    } catch (error) {
+      throw new AppError(getErrorMessage(error as Error));
+    }
   } catch (error) {
-    return handleError(error as Error)
+    return handleError(error as Error);
   }
 }
