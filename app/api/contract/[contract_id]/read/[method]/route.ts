@@ -100,12 +100,14 @@ export async function GET(
  *        description: Method of the contract to call
  *        required: true
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
+ *
  *     requestBody:
  *      description: Arguments
  *      content:
  *        application/json:
  *          schema:
  *            type: object
+ *
  *     responses:
  *       200:
  *        description: Call response
@@ -114,6 +116,7 @@ export async function GET(
  *            schema:
  *              type: object
  */
+
 export async function POST(
   request: Request,
   { params }: { params: { contract_id: string; method: string } }

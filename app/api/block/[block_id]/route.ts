@@ -17,26 +17,31 @@ import { decodeOperations } from '@/utils/operations'
  *        in: path
  *        description: The block id or number
  *        required: true
+ *
  *      - name: return_block
  *        schema:
  *          type: boolean
  *        in: query
  *        description: Wether or not the block content should be returned
+ *
  *      - name: return_receipt
  *        schema:
  *          type: boolean
  *        in: query
  *        description: Wether or not the receipts content should be returned
+ *
  *      - name: decode_operations
  *        schema:
  *          type: boolean
  *        in: query
  *        description: Wether or not the operations should be decoded
+ *
  *      - name: decode_events
  *        schema:
  *          type: boolean
  *        in: query
  *        description: Wether or not the events should be decoded
+ *
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
