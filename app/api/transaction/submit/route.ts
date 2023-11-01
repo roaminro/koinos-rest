@@ -1,21 +1,16 @@
-import { handleError } from '@/utils/errors'
+import { AppError, getErrorMessage, handleError } from '@/utils/errors'
 import { interfaces, Transaction } from 'koilib'
 import { getProvider } from '@/utils/providers'
 
 /**
  * @swagger
- * /api/transaction/submit/{transaction_id}/broadcast/{broadcast_value}:
+ * /api/transaction/submit:
  *   post:
  *     tags: [Transactions]
  *     description: This endpoint takes a transaction and submits it to the JSON RPC node.
+ *
  *     parameters:
- *      - name: transaction_id
- *        in: path
- *        schema:
- *          type: string
- *        description: ID of the transaction
- *        required: true
- *      - name: broadcast_value
+ *      - name: broadcast
  *        in: query
  *        schema:
  *          type: boolean
@@ -39,17 +34,27 @@ import { getProvider } from '@/utils/providers'
  */
 
 export async function POST(
-  request: Request,
-  { params }: { params: { transaction_id: interfaces.TransactionJson; broadcast_value: boolean } }
+  request: Request
+  // { params }: { params: { transaction_id: interfaces.TransactionJson; broadcast_value: boolean } }
 ) {
   try {
     // Get the JSON RPC provider
     const provider = getProvider()
 
-    // Submit the transaction to the JSON RPC using the provider
-    const result = await provider.sendTransaction(params.transaction_id, params.broadcast_value)
+    const transaction = (await request.json()) as interfaces.TransactionJson
 
-    return Response.json(result)
+    // /api/transaction/submit?broadcast=true
+    const { searchParams } = new URL(request.url)
+    const broadcast = searchParams.get('broadcast') !== 'false'
+
+    try {
+      // Submit the transaction to the JSON RPC using the provider
+      const result = await provider.sendTransaction(transaction, broadcast)
+
+      return Response.json(result)
+    } catch (error) {
+      return new AppError(getErrorMessage(error as Error))
+    }
   } catch (error) {
     return handleError(error as Error)
   }
