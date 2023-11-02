@@ -9,7 +9,7 @@ import { decodeOperations } from "@/utils/operations";
  * /api/decode/operations:
  *   post:
  *     tags: [Decode]
- *     description: This endpoint takes a transaction, an array of "encoded" operations, and returns an array of "decoded" operations.
+ *     description: This endpoint takes an array of "encoded" operations and returns an array of "decoded" operations.
  *
  *     parameters:
  *       - name: encodedOpsArray
