@@ -16,7 +16,7 @@ import { revalidatePath } from "next/cache";
  *        in: query
  *        schema:
  *          type: boolean
- *        description: Sets whether this transaction is broadcast globally or not. Defaults to true.
+ *        description: Sets whether this transaction is broadcasted globally or not. Defaults to true.
  *        required: false
  *
  *     requestBody:
@@ -42,7 +42,6 @@ export async function POST(request: NextRequest) {
 
     const transaction = (await request.json()) as interfaces.TransactionJson;
 
-    // /api/transaction/submit?broadcast=true
     const { searchParams } = new URL(request.url);
     const broadcast = searchParams.get("broadcast") !== "false";
 

@@ -1,9 +1,9 @@
-import { getContract } from "@/utils/contracts";
-import { AppError, handleError } from "@/utils/errors";
-import { decodeEvents } from "@/utils/events";
-import { decodeOperations } from "@/utils/operations";
-import { getProvider } from "@/utils/providers";
-import { interfaces, Transaction } from "koilib";
+import { getContract } from '@/utils/contracts';
+import { AppError, handleError } from '@/utils/errors';
+import { decodeEvents } from '@/utils/events';
+import { decodeOperations } from '@/utils/operations';
+import { getProvider } from '@/utils/providers';
+import { interfaces, Transaction } from 'koilib';
 
 /**
  * @swagger
@@ -50,16 +50,16 @@ export async function GET(
     const provider = getProvider();
 
     const { searchParams } = new URL(request.url);
-    const return_receipt = searchParams.get("return_receipt") !== "false";
-    const decode_operations = searchParams.get("decode_operations") !== "false";
-    const decode_events = searchParams.get("decode_events") !== "false";
+    const return_receipt = searchParams.get('return_receipt') !== 'false';
+    const decode_operations = searchParams.get('decode_operations') !== 'false';
+    const decode_events = searchParams.get('decode_events') !== 'false';
 
     const response = await provider.getTransactionsById([
       params.transaction_id,
     ]);
 
     if (!response.transactions.length) {
-      throw new AppError("transaction does not exist");
+      throw new AppError('transaction does not exist');
     }
 
     const [transaction] = response.transactions;
@@ -74,7 +74,7 @@ export async function GET(
             transaction_receipts: interfaces.TransactionReceipt[];
           };
         }[];
-      }>("block_store.get_blocks_by_id", {
+      }>('block_store.get_blocks_by_id', {
         return_block: false,
         return_receipt: true,
         block_ids: [transaction.containing_blocks[0]],

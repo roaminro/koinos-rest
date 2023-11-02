@@ -1,8 +1,8 @@
-import { interfaces } from "koilib";
-import { AppError, handleError } from "@/utils/errors";
-import { getProvider } from "@/utils/providers";
-import { decodeEvents } from "@/utils/events";
-import { decodeOperations } from "@/utils/operations";
+import { interfaces } from 'koilib';
+import { AppError, handleError } from '@/utils/errors';
+import { getProvider } from '@/utils/providers';
+import { decodeEvents } from '@/utils/events';
+import { decodeOperations } from '@/utils/operations';
 
 /**
  * @swagger
@@ -60,14 +60,14 @@ export async function GET(
     const provider = getProvider();
 
     const { searchParams } = new URL(request.url);
-    const return_block = searchParams.get("return_block") !== "false";
-    const return_receipt = searchParams.get("return_receipt") !== "false";
-    const decode_operations = searchParams.get("decode_operations") !== "false";
-    const decode_events = searchParams.get("decode_events") !== "false";
+    const return_block = searchParams.get('return_block') !== 'false';
+    const return_receipt = searchParams.get('return_receipt') !== 'false';
+    const decode_operations = searchParams.get('decode_operations') !== 'false';
+    const decode_events = searchParams.get('decode_events') !== 'false';
 
     const block_id = params.block_id;
     let blocks;
-    if (block_id.startsWith("0x")) {
+    if (block_id.startsWith('0x')) {
       blocks = await provider.call<{
         block_items: {
           block_id: string;
@@ -78,7 +78,7 @@ export async function GET(
             transaction_receipts: interfaces.TransactionReceipt[];
           };
         }[];
-      }>("block_store.get_blocks_by_id", {
+      }>('block_store.get_blocks_by_id', {
         return_block,
         return_receipt,
         block_ids: [block_id],
@@ -94,7 +94,7 @@ export async function GET(
             transaction_receipts: interfaces.TransactionReceipt[];
           };
         }[];
-      }>("block_store.get_blocks_by_height", {
+      }>('block_store.get_blocks_by_height', {
         return_block,
         return_receipt,
         num_blocks: 1,
@@ -104,7 +104,7 @@ export async function GET(
     }
 
     if (!blocks.block_items.length) {
-      throw new AppError("block does not exist");
+      throw new AppError('block does not exist');
     }
 
     const [block] = blocks.block_items;
