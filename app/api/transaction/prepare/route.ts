@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 
 /**
  * @swagger
- * /api/transaction/prepare-transaction:
+ * /api/transaction/prepare:
  *   post:
  *     tags: [Transactions]
  *     description: This endpoint takes a transaction and an optional provider and/or payer, then returns a prepared transaction object.
