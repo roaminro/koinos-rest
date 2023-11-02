@@ -52,11 +52,11 @@ export async function POST(request: NextRequest) {
       const preparedTransaction = await Transaction.prepareTransaction(
         transaction,
         provider
-        // '1PWdJ3VFB6kwu6wLdLPr9BwQZrNiPs7g8j'
       );
 
       const prepareTxPath =
-        request.nextUrl.searchParams.get("prepare-transaction") || "/";
+        request.nextUrl.searchParams.get("prepare") || "/";
+        
       revalidatePath(prepareTxPath);
 
       return NextResponse.json(preparedTransaction);
