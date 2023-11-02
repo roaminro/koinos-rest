@@ -132,8 +132,10 @@ export async function PUT(
       const seqNum = searchParams.get("seqNum") !== "";
       const ascending = searchParams.get("ascending") !== "false";
       const irreversible = searchParams.get("irreversible") !== "false";
+
       const decode_operations =
         searchParams.get("decode_operations") !== "false";
+        
       const decode_events = searchParams.get("decode_events") !== "false";
 
       const { values } = await provider!.call<{
