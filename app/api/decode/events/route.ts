@@ -9,10 +9,10 @@ import { decodeEvents } from '@/utils/events'
  *   post:
  *     tags: [Decode]
  *     description: This endpoint takes an array of "encoded" events and returns an array of "decoded" events.
- *     
+ *
  *     parameters:
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
- * 
+ *
  *     requestBody:
  *       description: Input is expected to be an array of "encoded" events.
  *       required: true
