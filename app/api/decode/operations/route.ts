@@ -31,12 +31,30 @@ import { decodeOperations } from "@/utils/operations";
  *         description: Input is expected to be an array of "encoded" operations.
  *         required: true
  *
- *     requestBody:
- *       description: Arguments
+  *     requestBody:
+ *       description: Input is expected to be an array of "encoded" operations.
+ *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
+ *             type: array
+ *             items:
+ *               type: object
+ *               properties:
+ *                 call_contract:
+ *                   type: object
+ *                   properties:
+ *                     contract_id:
+ *                       type: string
+ *                     entry_point:
+ *                       type: integer
+ *                     args:
+ *                       type: string
+ *             example:
+ *               - call_contract:
+ *                   contract_id: "1D53GFQkL5TkQ9okuf6r3Gta3oeTMVgGJW"
+ *                   entry_point: 3870180098
+ *                   args: "ChkALjP9GqkHsiTOnObJQiiQHSg6AtqVbaeREM_czhU="
  *
  *     responses:
  *       200:
@@ -47,10 +65,11 @@ import { decodeOperations } from "@/utils/operations";
  *               type: object
  */
 
-export async function POST(request: NextRequest,{params}:{params:interfaces.OperationJson[]}) {
+export async function POST(request: NextRequest) {
   try {
     try {
-      const result=  await decodeOperations(params);
+      const operations= (await request.json()) as interfaces.OperationJson[];
+      const result=  await decodeOperations(operations);
 
       const operationsPath = request.nextUrl.searchParams.get("operations") || "/";
       revalidatePath(operationsPath);
