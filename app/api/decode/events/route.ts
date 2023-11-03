@@ -1,15 +1,15 @@
-import { AppError, getErrorMessage, handleError } from "@/utils/errors";
-import { interfaces } from "koilib";
-import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
-import { decodeEvents } from "@/utils/events";
+import { AppError, getErrorMessage, handleError } from "@/utils/errors"
+import { interfaces } from "koilib"
+import { NextRequest, NextResponse } from "next/server"
+import { revalidatePath } from "next/cache"
+import { decodeEvents } from "@/utils/events"
 
 /**
  * @swagger
  * /api/decode/events:
  *   post:
  *     tags: [Decode]
- *     description: This takes an array of "encoded" events and returns an array of "decoded" events
+ *     description: This endpoint takes an array of "encoded" events and returns an array of "decoded" events.
  *
  *     parameters:
  *       - name: encodedEventsArray
@@ -17,26 +17,19 @@ import { decodeEvents } from "@/utils/events";
  *         schema:
  *           type: array
  *           items:
- *             type: object
- *             properties:
- *               call_contract:
- *                 type: object
- *                 properties:
- *                   contract_id:
- *                     type: string
- *                   entry_point:
- *                     type: integer
- *                   args:
- *                     type: string
- *         description: Input is expected to be an array of "encoded" operations.
+ *             $ref: '#/components/schemas/EncodedEvent'
+ *         description: Input is expected to be an array of "encoded" events.
  *         required: true
  *
  *     requestBody:
- *       description: Arguments
+ *       description: Input is expected to be an array of "encoded" events.
+ *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
+ *             type: array
+ *             items:
+ *               $ref: '#/components/schemas/EncodedEvent'
  *
  *     responses:
  *       200:
@@ -45,21 +38,42 @@ import { decodeEvents } from "@/utils/events";
  *           application/json:
  *             schema:
  *               type: object
+ * 
+ * components:
+ *   schemas:
+ *     EncodedEvent:
+ *             type: object
+ *             properties:
+ *               sequence:
+ *                 type: integer
+ *                 nullable: true
+ *               source:
+ *                 type: string
+ *               name:
+ *                 type: string
+ *               data:
+ *                 type: string
+ *               impacted:
+ *                 type: array
+ *               items:
+ *                 type: string   
  */
 
-export async function POST(request: NextRequest,{params}:{params:interfaces.EventData[]}) {
+
+export async function POST(request: NextRequest) {
   try {
     try {
-      const result=  await decodeEvents(params);
+       const events= (await request.json()) as interfaces.EventData[]
+      const result=  await decodeEvents(events)
 
-      const eventsPath = request.nextUrl.searchParams.get("events") || "/";
-      revalidatePath(eventsPath);
+      const eventsPath = request.nextUrl.searchParams.get("events") || "/"
+      revalidatePath(eventsPath)
 
-      return NextResponse.json(result);
+      return NextResponse.json(result)
     } catch (error) {
-      throw new AppError(getErrorMessage(error as Error));
+      throw new AppError(getErrorMessage(error as Error))
     }
   } catch (error) {
-    return handleError(error as Error);
+    return handleError(error as Error)
   }
 }
