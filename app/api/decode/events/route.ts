@@ -1,8 +1,8 @@
-import { AppError, getErrorMessage, handleError } from "@/utils/errors"
-import { interfaces } from "koilib"
-import { NextRequest, NextResponse } from "next/server"
-import { revalidatePath } from "next/cache"
-import { decodeEvents } from "@/utils/events"
+import { AppError, getErrorMessage, handleError } from '@/utils/errors'
+import { interfaces } from 'koilib'
+import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
+import { decodeEvents } from '@/utils/events'
 
 /**
  * @swagger
@@ -10,17 +10,6 @@ import { decodeEvents } from "@/utils/events"
  *   post:
  *     tags: [Decode]
  *     description: This endpoint takes an array of "encoded" events and returns an array of "decoded" events.
- *
- *     parameters:
- *       - name: encodedEventsArray
- *         in: query
- *         schema:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/EncodedEvent'
- *         description: Input is expected to be an array of "encoded" events.
- *         required: true
- *
  *     requestBody:
  *       description: Input is expected to be an array of "encoded" events.
  *       required: true
@@ -38,7 +27,7 @@ import { decodeEvents } from "@/utils/events"
  *           application/json:
  *             schema:
  *               type: object
- * 
+ *
  * components:
  *   schemas:
  *     EncodedEvent:
@@ -55,18 +44,17 @@ import { decodeEvents } from "@/utils/events"
  *                 type: string
  *               impacted:
  *                 type: array
- *               items:
- *                 type: string   
+ *                 items:
+ *                    type: string
  */
-
 
 export async function POST(request: NextRequest) {
   try {
     try {
-       const events= (await request.json()) as interfaces.EventData[]
-      const result=  await decodeEvents(events)
+      const events = (await request.json()) as interfaces.EventData[]
+      const result = await decodeEvents(events)
 
-      const eventsPath = request.nextUrl.searchParams.get("events") || "/"
+      const eventsPath = request.nextUrl.searchParams.get('events') || '/'
       revalidatePath(eventsPath)
 
       return NextResponse.json(result)
