@@ -1,18 +1,19 @@
+import { NextResponse } from 'next/server';
 import { getAddress } from '@/utils/addresses'
 import { AppError, getErrorMessage, handleError } from '@/utils/errors'
 
 /**
  * @swagger
- * /api/kap/{name}/address:
+ * /api/nicknames/{name}/address:
  *   get:
- *     tags: [Koinos Account Protocol]
- *     description: Returns the KAP name's address
+ *     tags: [Nicknames]
+ *     description: Takes a token's nickname and the owner of that nickname is returned.
  *     parameters:
  *      - name: name
  *        schema:
  *          type: string
  *        in: path
- *        description: KAP name to retrieve the address for
+ *        description: Input nickname used to retrieve the owner address
  *        required: true
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
@@ -24,12 +25,12 @@ import { AppError, getErrorMessage, handleError } from '@/utils/errors'
  *              $ref: '#/components/schemas/Value'
  */
 
-export async function GET(request: Request, { params }: { params: { account: string } }) {
+export async function GET({ params }: { params: { name: string } }) {
   try {
     try {
-      const address = await getAddress(params.account)
+      const address = await getAddress(params.name)
 
-      return Response.json({
+      return NextResponse.json({
         address
       })
     } catch (error) {
