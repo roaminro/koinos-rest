@@ -1,7 +1,6 @@
 import { AppError, getErrorMessage, handleError } from '@/utils/errors'
 import { interfaces } from 'koilib'
 import { NextRequest, NextResponse } from 'next/server'
-import { revalidatePath } from 'next/cache'
 import { decodeOperations } from '@/utils/operations'
 
 /**
@@ -11,7 +10,8 @@ import { decodeOperations } from '@/utils/operations'
  *     tags: [Decode]
  *     description: This endpoint takes an array of 'encoded' operations and returns an array of 'decoded' operations.
  *
- *     parameter - $ref: '#/components/parameters/X-JSON-RPC-URL'
+ *     parameters:
+ *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  * 
  *     requestBody:
  *       description: Input is expected to be an array of 'encoded' operations.
@@ -52,9 +52,6 @@ export async function POST(request: NextRequest) {
     try {
       const operations= (await request.json()) as interfaces.OperationJson[]
       const result=  await decodeOperations(operations)
-
-      const operationsPath = request.nextUrl.searchParams.get('operations') || '/'
-      revalidatePath(operationsPath)
 
       return NextResponse.json(result)
     } catch (error) {

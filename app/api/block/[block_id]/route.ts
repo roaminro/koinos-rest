@@ -116,8 +116,8 @@ export async function GET(
 
       if (block.receipt.transaction_receipts) {
         for (
-          let index = 0
-          index < block.receipt.transaction_receipts.length
+          let index = 0;
+          index < block.receipt.transaction_receipts.length;
           index++
         ) {
           const receipt = block.receipt.transaction_receipts[index]
@@ -130,7 +130,7 @@ export async function GET(
     }
 
     if (block.block && block.block.transactions && decode_operations) {
-      for (let index = 0 index < block.block.transactions.length index++) {
+      for (let index = 0; index < block.block.transactions.length; index++) {
         const transaction = block.block.transactions[index]
 
         if (transaction.operations) {
