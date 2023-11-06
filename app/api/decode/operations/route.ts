@@ -1,38 +1,20 @@
-import { AppError, getErrorMessage, handleError } from "@/utils/errors";
-import { interfaces } from "koilib";
-import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
-import { decodeOperations } from "@/utils/operations";
+import { AppError, getErrorMessage, handleError } from '@/utils/errors'
+import { interfaces } from 'koilib'
+import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
+import { decodeOperations } from '@/utils/operations'
 
 /**
  * @swagger
  * /api/decode/operations:
  *   post:
  *     tags: [Decode]
- *     description: This endpoint takes an array of "encoded" operations and returns an array of "decoded" operations.
+ *     description: This endpoint takes an array of 'encoded' operations and returns an array of 'decoded' operations.
  *
- *     parameters:
- *       - name: encodedOpsArray
- *         in: query
- *         schema:
- *           type: array
- *           items:
- *             type: object
- *             properties:
- *               call_contract:
- *                 type: object
- *                 properties:
- *                   contract_id:
- *                     type: string
- *                   entry_point:
- *                     type: integer
- *                   args:
- *                     type: string
- *         description: Input is expected to be an array of "encoded" operations.
- *         required: true
- *
-  *     requestBody:
- *       description: Input is expected to be an array of "encoded" operations.
+ *     parameter - $ref: '#/components/parameters/X-JSON-RPC-URL'
+ * 
+ *     requestBody:
+ *       description: Input is expected to be an array of 'encoded' operations.
  *       required: true
  *       content:
  *         application/json:
@@ -52,9 +34,9 @@ import { decodeOperations } from "@/utils/operations";
  *                       type: string
  *             example:
  *               - call_contract:
- *                   contract_id: "1D53GFQkL5TkQ9okuf6r3Gta3oeTMVgGJW"
+ *                   contract_id: '1D53GFQkL5TkQ9okuf6r3Gta3oeTMVgGJW'
  *                   entry_point: 3870180098
- *                   args: "ChkALjP9GqkHsiTOnObJQiiQHSg6AtqVbaeREM_czhU="
+ *                   args: 'ChkALjP9GqkHsiTOnObJQiiQHSg6AtqVbaeREM_czhU='
  *
  *     responses:
  *       200:
@@ -68,17 +50,17 @@ import { decodeOperations } from "@/utils/operations";
 export async function POST(request: NextRequest) {
   try {
     try {
-      const operations= (await request.json()) as interfaces.OperationJson[];
-      const result=  await decodeOperations(operations);
+      const operations= (await request.json()) as interfaces.OperationJson[]
+      const result=  await decodeOperations(operations)
 
-      const operationsPath = request.nextUrl.searchParams.get("operations") || "/";
-      revalidatePath(operationsPath);
+      const operationsPath = request.nextUrl.searchParams.get('operations') || '/'
+      revalidatePath(operationsPath)
 
-      return NextResponse.json(result);
+      return NextResponse.json(result)
     } catch (error) {
-      throw new AppError(getErrorMessage(error as Error));
+      throw new AppError(getErrorMessage(error as Error))
     }
   } catch (error) {
-    return handleError(error as Error);
+    return handleError(error as Error)
   }
 }
