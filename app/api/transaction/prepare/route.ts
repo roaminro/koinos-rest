@@ -26,22 +26,6 @@ import { NextRequest, NextResponse } from "next/server";
  *              type: object
  */
 
-// export async function POST(request: Request) {
-//   try {
-//     const provider = getProvider()
-//     const transaction = (await request.json()) as interfaces.TransactionJson
-//     const preparedTransaction = await Transaction.prepareTransaction(
-//       transaction,
-//       provider
-//       // '1PWdJ3VFB6kwu6wLdLPr9BwQZrNiPs7g8j'
-//     )
-
-//     return Response.json(preparedTransaction)
-//   } catch (error) {
-//     return handleError(error as Error)
-//   }
-// }
-
 export async function POST(request: NextRequest) {
   try {
     try {
