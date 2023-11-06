@@ -52,10 +52,7 @@ import { decodeOperations } from '@/utils/operations'
  *              type: object
  */
 
-export async function GET(
-  request: Request,
-  { params }: { params: { block_id: string } }
-) {
+export async function GET(request: Request, { params }: { params: { block_id: string } }) {
   try {
     const provider = getProvider()
 
@@ -81,7 +78,7 @@ export async function GET(
       }>('block_store.get_blocks_by_id', {
         return_block,
         return_receipt,
-        block_ids: [block_id],
+        block_ids: [block_id]
       })
     } else {
       blocks = await provider.call<{
@@ -99,7 +96,7 @@ export async function GET(
         return_receipt,
         num_blocks: 1,
         ancestor_start_height: block_id,
-        head_block_id: (await provider.getHeadInfo()).head_topology.id,
+        head_block_id: (await provider.getHeadInfo()).head_topology.id
       })
     }
 
@@ -115,22 +112,17 @@ export async function GET(
       }
 
       if (block.receipt.transaction_receipts) {
-        for (
-          let index = 0
-          index < block.receipt.transaction_receipts.length
-          index++
-        ) {
+        for (let index = 0; index < block.receipt.transaction_receipts.length; index++) {
           const receipt = block.receipt.transaction_receipts[index]
           if (receipt.events) {
-            block.receipt.transaction_receipts[index].events =
-              await decodeEvents(receipt.events)
+            block.receipt.transaction_receipts[index].events = await decodeEvents(receipt.events)
           }
         }
       }
     }
 
     if (block.block && block.block.transactions && decode_operations) {
-      for (let index = 0 index < block.block.transactions.length index++) {
+      for (let index = 0; index < block.block.transactions.length; index++) {
         const transaction = block.block.transactions[index]
 
         if (transaction.operations) {
