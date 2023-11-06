@@ -16,7 +16,9 @@ import { utils } from 'koilib'
  *        in: path
  *        description: Koinos address of the account, name of the account (for system contracts) or KAP name
  *        required: true
+ *
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
+ *
  *     responses:
  *       200:
  *        description: Value
@@ -25,14 +27,17 @@ import { utils } from 'koilib'
  *            schema:
  *              $ref: '#/components/schemas/Value'
  */
-export async function GET(request: Request, { params }: { params: { account: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: { account: string } }
+) {
   try {
     const provider = getProvider()
     const account = await getAddress(params.account)
     try {
       const rc = await provider.getAccountRc(account)
       return Response.json({
-        value: utils.formatUnits(rc, 8)
+        value: utils.formatUnits(rc, 8),
       })
     } catch (error) {
       throw new AppError(getErrorMessage(error as Error))

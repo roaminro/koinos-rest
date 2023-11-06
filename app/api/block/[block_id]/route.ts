@@ -17,26 +17,31 @@ import { decodeOperations } from '@/utils/operations'
  *        in: path
  *        description: The block id or number
  *        required: true
+ *
  *      - name: return_block
  *        schema:
  *          type: boolean
  *        in: query
  *        description: Wether or not the block content should be returned
+ *
  *      - name: return_receipt
  *        schema:
  *          type: boolean
  *        in: query
  *        description: Wether or not the receipts content should be returned
+ *
  *      - name: decode_operations
  *        schema:
  *          type: boolean
  *        in: query
  *        description: Wether or not the operations should be decoded
+ *
  *      - name: decode_events
  *        schema:
  *          type: boolean
  *        in: query
  *        description: Wether or not the events should be decoded
+ *
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
@@ -46,7 +51,11 @@ import { decodeOperations } from '@/utils/operations'
  *            schema:
  *              type: object
  */
-export async function GET(request: Request, { params }: { params: { block_id: string } }) {
+
+export async function GET(
+  request: Request,
+  { params }: { params: { block_id: string } }
+) {
   try {
     const provider = getProvider()
 
@@ -72,7 +81,7 @@ export async function GET(request: Request, { params }: { params: { block_id: st
       }>('block_store.get_blocks_by_id', {
         return_block,
         return_receipt,
-        block_ids: [block_id]
+        block_ids: [block_id],
       })
     } else {
       blocks = await provider.call<{
@@ -90,7 +99,7 @@ export async function GET(request: Request, { params }: { params: { block_id: st
         return_receipt,
         num_blocks: 1,
         ancestor_start_height: block_id,
-        head_block_id: (await provider.getHeadInfo()).head_topology.id
+        head_block_id: (await provider.getHeadInfo()).head_topology.id,
       })
     }
 
@@ -106,10 +115,15 @@ export async function GET(request: Request, { params }: { params: { block_id: st
       }
 
       if (block.receipt.transaction_receipts) {
-        for (let index = 0; index < block.receipt.transaction_receipts.length; index++) {
+        for (
+          let index = 0;
+          index < block.receipt.transaction_receipts.length;
+          index++
+        ) {
           const receipt = block.receipt.transaction_receipts[index]
           if (receipt.events) {
-            block.receipt.transaction_receipts[index].events = await decodeEvents(receipt.events)
+            block.receipt.transaction_receipts[index].events =
+              await decodeEvents(receipt.events)
           }
         }
       }

@@ -1,4 +1,3 @@
-import { getContract } from '@/utils/contracts'
 import { AppError, handleError } from '@/utils/errors'
 import { decodeEvents } from '@/utils/events'
 import { decodeOperations } from '@/utils/operations'
