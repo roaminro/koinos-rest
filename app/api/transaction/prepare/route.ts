@@ -2,7 +2,6 @@ import { AppError, getErrorMessage, handleError } from "@/utils/errors";
 import { interfaces, Transaction } from "koilib";
 import { getProvider } from "@/utils/providers";
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
 
 /**
  * @swagger
@@ -53,11 +52,6 @@ export async function POST(request: NextRequest) {
         transaction,
         provider
       );
-
-      const prepareTxPath =
-        request.nextUrl.searchParams.get("prepare") || "/";
-        
-      revalidatePath(prepareTxPath);
 
       return NextResponse.json(preparedTransaction);
     } catch (error) {
