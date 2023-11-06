@@ -58,9 +58,6 @@ export async function POST(request: NextRequest) {
       const events = (await request.json()) as interfaces.EventData[]
       const result = await decodeEvents(events)
 
-      const eventsPath = request.nextUrl.searchParams.get('events') || '/'
-      revalidatePath(eventsPath)
-
       return NextResponse.json(result)
     } catch (error) {
       throw new AppError(getErrorMessage(error as Error))

@@ -77,7 +77,7 @@ export async function GET(
       }>('block_store.get_blocks_by_id', {
         return_block: false,
         return_receipt: true,
-        block_ids: [transaction.containing_blocks[0]],
+        block_ids: transaction.containing_blocks
       })
 
       if (blocks.block_items.length) {
