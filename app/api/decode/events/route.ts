@@ -1,7 +1,6 @@
 import { AppError, getErrorMessage, handleError } from '@/utils/errors'
 import { interfaces } from 'koilib'
 import { NextRequest, NextResponse } from 'next/server'
-import { revalidatePath } from 'next/cache'
 import { decodeEvents } from '@/utils/events'
 
 /**
