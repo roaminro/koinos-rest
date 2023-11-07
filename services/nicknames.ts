@@ -15,12 +15,11 @@ function getContract(): Contract {
 }
 
 export async function getNicknameOwner(name: string): Promise<Nickname | undefined> {
+  const contract = getContract()  
   const stringToHex = `0x${utils.toHexString(new TextEncoder().encode(name))}`
 
-  const contract = getContract()  
-
   const { result } = await contract.functions.owner_of<{ account: string }>({
-    stringToHex
+    account:stringToHex
   })
 
   return result
