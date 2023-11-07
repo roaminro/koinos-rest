@@ -35,7 +35,7 @@ export async function GET(request: Request, { params }: { params: { contract_id:
       const { result: nameRes } = await contract.functions.name()
       const { result: symbolRes } = await contract.functions.symbol()
       const { result: decimalRes } = await contract.functions.decimals()
-      const { result: totalSupplyRes } = await contract.functions.totalSupply()
+      const { result: totalSupplyRes } = await contract.functions.total_supply()
 
       return Response.json({
         name: nameRes!.value,
