@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import { AppError, getErrorMessage, handleError } from '@/utils/errors'
 import { getNicknameOwner } from '@/services/nicknames';
 
@@ -24,13 +24,13 @@ import { getNicknameOwner } from '@/services/nicknames';
  *            schema:
  *              type: object
  */
-export async function GET({ params }: { params: { nickname: string } }) {
+export async function GET(request:NextRequest,{ params }: { params: { nickname: string } }) {
   try {
     try {
-      const address = await getNicknameOwner(params.nickname)
+      const ownerAddress = await getNicknameOwner(params.nickname)
 
       return NextResponse.json({
-        address
+        ownerAddress
       })
     } catch (error) {
       throw new AppError(getErrorMessage(error as Error))

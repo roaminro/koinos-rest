@@ -7,7 +7,7 @@ type Nickname = {}
 
 function getContract(): Contract {
   return new Contract({
-    id: config.systemContracts.nameservice,
+    id: config.contracts.nicknames,
     // @ts-ignore abi is compatible
     abi: Nicknames,
     provider: getProvider()
@@ -18,11 +18,11 @@ export async function getNicknameOwner(name: string): Promise<Nickname | undefin
   const contract = getContract()  
   const stringToHex = `0x${utils.toHexString(new TextEncoder().encode(name))}`
 
-  const { result } = await contract.functions.owner_of<{ account: string }>({
-    account:stringToHex
+  const { result } = await contract.functions.owner_of<{ token_id: string }>({
+    token_id:stringToHex
   })
 
-  return result
+  return result.account
 }
 
 export async function getNicknamesOwned(owner: string): Promise<Nickname[]> {
