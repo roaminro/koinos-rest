@@ -4,12 +4,12 @@ import { AppError, getErrorMessage, handleError } from '@/utils/errors'
 
 /**
  * @swagger
- * /api/nicknames/{nickname}/names-owned:
+ * /api/nicknames/{account}/names:
  *   get:
  *     tags: [Nicknames]
  *     description: An account address is passed and the names owned by that account are returned.
  *     parameters:
- *      - name: nickname
+ *      - name: account
  *        schema:
  *          type: string
  *        in: path
@@ -25,10 +25,10 @@ import { AppError, getErrorMessage, handleError } from '@/utils/errors'
  *            schema:
  *              type: object
  */
-export async function GET(request: NextRequest, { params }: { params: { nickname: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { account: string } }) {
   try {
     try {
-      const names = await getNicknamesOwned(params.nickname)
+      const names = await getNicknamesOwned(params.account)
 
       return NextResponse.json({
         names
