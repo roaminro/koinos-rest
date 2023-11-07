@@ -1,7 +1,7 @@
-import { getAddress } from "@/utils/addresses";
-import { AppError, getErrorMessage, handleError } from "@/utils/errors";
-import { getProvider } from "@/utils/providers";
-import { utils } from "koilib";
+import { getAddress } from '@/utils/addresses'
+import { AppError, getErrorMessage, handleError } from '@/utils/errors'
+import { getProvider } from '@/utils/providers'
+import { utils } from 'koilib'
 
 /**
  * @swagger
@@ -32,17 +32,17 @@ export async function GET(
   { params }: { params: { account: string } }
 ) {
   try {
-    const provider = getProvider();
-    const account = await getAddress(params.account);
+    const provider = getProvider()
+    const account = await getAddress(params.account)
     try {
-      const rc = await provider.getAccountRc(account);
+      const rc = await provider.getAccountRc(account)
       return Response.json({
         value: utils.formatUnits(rc, 8),
-      });
+      })
     } catch (error) {
-      throw new AppError(getErrorMessage(error as Error));
+      throw new AppError(getErrorMessage(error as Error))
     }
   } catch (error) {
-    return handleError(error as Error);
+    return handleError(error as Error)
   }
 }

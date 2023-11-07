@@ -32,7 +32,7 @@ export async function GET(request: Request, { params }: { params: { contract_id:
     const contract = getFTContract(contract_id)
 
     try {
-      const { result: totalSupplyRes } = await contract.functions.totalSupply()
+      const { result: totalSupplyRes } = await contract.functions.total_supply()
       const { result: decimalRes } = await contract.functions.decimals()
 
       return Response.json({
