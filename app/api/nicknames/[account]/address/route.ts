@@ -4,12 +4,12 @@ import { getNicknameOwner } from '@/services/nicknames'
 
 /**
  * @swagger
- * /api/nicknames/{nickname}/address:
+ * /api/nicknames/{account}/address:
  *   get:
  *     tags: [Nicknames]
  *     description: Takes a token's nickname and the owner of that nickname is returned.
  *     parameters:
- *      - name: nickname
+ *      - name: account
  *        schema:
  *          type: string
  *        in: path
@@ -24,12 +24,12 @@ import { getNicknameOwner } from '@/services/nicknames'
  *            schema:
  *              type: object
  */
-export async function GET(request: NextRequest, { params }: { params: { nickname: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { account: string } }) {
   try {
     try {
-      const ownerAddress = await getNicknameOwner(params.nickname)
+      const address = await getNicknameOwner(params.account)
       return NextResponse.json({
-        ownerAddress
+        address
       })
     } catch (error) {
       throw new AppError(getErrorMessage(error as Error))
