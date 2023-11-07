@@ -27,11 +27,12 @@ export async function getNicknameOwner(name: string): Promise<Nickname | undefin
 
 export async function getNicknamesOwned(owner: string): Promise<Nickname[]> {
   const contract = getContract()
+  const stringToHex = `0x${utils.toHexString(new TextEncoder().encode(owner))}`
 
-  const { result } = await contract.functions.get_names<{
+  const { result } = await contract.functions.get_tokens_by_owner<{
     names: Nickname[]
   }>({
-    owner
+    stringToHex
   })
 
   if (!result) {

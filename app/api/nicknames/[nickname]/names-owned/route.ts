@@ -1,24 +1,25 @@
-import { NextResponse, NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
+import { getNicknamesOwned } from '@/services/nicknames'
 import { AppError, getErrorMessage, handleError } from '@/utils/errors'
-import { getNicknameOwner } from '@/services/nicknames'
 
 /**
  * @swagger
- * /api/nicknames/{nickname}/address:
+ * /api/nicknames/{nickname}/names-owned:
  *   get:
  *     tags: [Nicknames]
- *     description: Takes a token's nickname and the owner of that nickname is returned.
+ *     description: An account address is passed and the names owned by that account are returned.
  *     parameters:
  *      - name: nickname
  *        schema:
  *          type: string
  *        in: path
- *        description: Input nickname used to retrieve the owner address
+ *        description: Nickname of the account
  *        required: true
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
+ *
  *     responses:
  *       200:
- *        description: Nickname owner
+ *        description: Nicknames
  *        content:
  *          application/json:
  *            schema:
@@ -27,9 +28,10 @@ import { getNicknameOwner } from '@/services/nicknames'
 export async function GET(request: NextRequest, { params }: { params: { nickname: string } }) {
   try {
     try {
-      const ownerAddress = await getNicknameOwner(params.nickname)
+      const names = await getNicknamesOwned(params.nickname)
+
       return NextResponse.json({
-        ownerAddress
+        names
       })
     } catch (error) {
       throw new AppError(getErrorMessage(error as Error))
