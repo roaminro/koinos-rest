@@ -3,7 +3,7 @@ import { config } from '@/app.config'
 import { getProvider } from '@/utils/providers'
 import Nicknames from '@/abis/nicknames.json'
 
-type Nickname = {}
+type Nickname = { token_id: string }
 
 function getContract(): Contract {
   return new Contract({
@@ -15,14 +15,14 @@ function getContract(): Contract {
 }
 
 export async function getNicknameOwner(name: string): Promise<Nickname | undefined> {
-  const contract = getContract()  
+  const contract = getContract()
   const stringToHex = `0x${utils.toHexString(new TextEncoder().encode(name))}`
 
   const { result } = await contract.functions.owner_of<{ token_id: string }>({
-    token_id:stringToHex
+    token_id: stringToHex
   })
 
-  return result.account
+  return result
 }
 
 export async function getNicknamesOwned(owner: string): Promise<Nickname[]> {
