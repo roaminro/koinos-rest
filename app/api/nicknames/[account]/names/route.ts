@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getNicknamesOwned } from '@/services/nicknames'
 import { AppError, getErrorMessage, handleError } from '@/utils/errors'
+import { getAddress } from '@/utils/addresses'
 
 /**
  * @swagger
@@ -27,8 +28,10 @@ import { AppError, getErrorMessage, handleError } from '@/utils/errors'
  */
 export async function GET(request: NextRequest, { params }: { params: { account: string } }) {
   try {
+    const account = await getAddress(params.account)
+
     try {
-      const names = await getNicknamesOwned(params.account)
+      const names = await getNicknamesOwned(account)
 
       return NextResponse.json({
         names
