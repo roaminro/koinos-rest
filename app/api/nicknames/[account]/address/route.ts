@@ -1,33 +1,24 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { getNicknamesOwned } from '@/services/nicknames'
+import { NextResponse, NextRequest } from 'next/server'
 import { AppError, getErrorMessage, handleError } from '@/utils/errors'
-<<<<<<<< HEAD:app/api/nicknames/[account]/names/route.ts
-
-/**
- * @swagger
- * /api/nicknames/{account}/names:
-========
 import { getAddress } from '@/utils/addresses'
 
 /**
  * @swagger
  * /api/nicknames/{account}/address:
->>>>>>>> main:app/api/nicknames/[account]/address/route.ts
  *   get:
  *     tags: [Nicknames]
- *     description: An account address is passed and the names owned by that account are returned.
+ *     description: Takes a token's nickname and the owner of that nickname is returned.
  *     parameters:
  *      - name: account
  *        schema:
  *          type: string
  *        in: path
- *        description: Nickname of the account
+ *        description: Input nickname used to retrieve the owner address
  *        required: true
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
- *
  *     responses:
  *       200:
- *        description: Nicknames
+ *        description: Nickname owner
  *        content:
  *          application/json:
  *            schema:
@@ -36,17 +27,10 @@ import { getAddress } from '@/utils/addresses'
 export async function GET(request: NextRequest, { params }: { params: { account: string } }) {
   try {
     try {
-<<<<<<<< HEAD:app/api/nicknames/[account]/names/route.ts
-      const names = await getNicknamesOwned(params.account)
-
-      return NextResponse.json({
-        names
-========
       const address = await getAddress(params.account)
 
       return NextResponse.json({
         address
->>>>>>>> main:app/api/nicknames/[account]/address/route.ts
       })
     } catch (error) {
       throw new AppError(getErrorMessage(error as Error))
