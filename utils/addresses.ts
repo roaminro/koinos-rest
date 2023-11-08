@@ -2,6 +2,7 @@ import { config } from '@/app.config'
 import { getKAPName } from '@/services/kap'
 import { utils } from 'koilib'
 import { AppError } from './errors'
+import { getNicknameOwner } from '@/services/nicknames'
 
 export async function getAddress(str: string) {
   // system contracts
@@ -14,6 +15,14 @@ export async function getAddress(str: string) {
 
     if (kapName) {
       return kapName.owner
+    }
+  }
+
+  // nicknames
+  else if (str.startsWith('@')) {
+    const owner = await getNicknameOwner(str)
+    if (owner) {
+      return owner
     }
   }
 
