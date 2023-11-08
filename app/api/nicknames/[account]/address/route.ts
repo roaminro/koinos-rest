@@ -1,35 +1,35 @@
-import { getAddress } from '@/utils/addresses'
+import { NextResponse, NextRequest } from 'next/server'
 import { AppError, getErrorMessage, handleError } from '@/utils/errors'
+import { getAddress } from '@/utils/addresses'
 
 /**
  * @swagger
- * /api/kap/{name}/address:
+ * /api/nicknames/{account}/address:
  *   get:
- *     tags: [Koinos Account Protocol]
- *     description: Returns the KAP name's address
+ *     tags: [Nicknames]
+ *     description: Takes a token's nickname and the owner of that nickname is returned.
  *     parameters:
- *      - name: name
+ *      - name: account
  *        schema:
  *          type: string
  *        in: path
- *        description: KAP name to retrieve the address for
+ *        description: Input nickname used to retrieve the owner address
  *        required: true
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
- *        description: Value
+ *        description: Nickname owner
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Value'
+ *              type: object
  */
-
-export async function GET(request: Request, { params }: { params: { account: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { account: string } }) {
   try {
     try {
       const address = await getAddress(params.account)
 
-      return Response.json({
+      return NextResponse.json({
         address
       })
     } catch (error) {
