@@ -14,15 +14,16 @@ function getContract(): Contract {
   })
 }
 
-export async function getNicknameOwner(name: string): Promise<Nickname | undefined> {
+export async function getNicknameOwner(name: string): Promise<string | undefined> {
   const contract = getContract()
-  const stringToHex = `0x${utils.toHexString(new TextEncoder().encode(name))}`
+  // const owner = `0x${utils.toHexString(new TextEncoder().encode(name))}`
+  const owner = `0x${utils.toHexString(new TextEncoder().encode(name.replace('@', '')))}`
 
   const { result } = await contract.functions.owner_of<Nickname>({
-    token_id: stringToHex
+    owner
   })
 
-  return result
+  return result!.address
 }
 
 export async function getNicknamesOwned(owner: string): Promise<Nickname[]> {
