@@ -1,8 +1,6 @@
 import { AppError, getErrorMessage, handleError } from '@/utils/errors'
-import { decodeEvents } from '@/utils/events'
-import { decodeOperations } from '@/utils/operations'
 import { getProvider } from '@/utils/providers'
-import { interfaces, Contract, Provider, utils } from 'koilib'
+import { interfaces } from 'koilib'
 import { NextRequest, NextResponse } from 'next/server'
 
 /**
@@ -122,25 +120,19 @@ export type HistoryRecord = {
   seq_num?: string
 }
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { account: string } }
-): Promise<HistoryRecord[]> {
+export async function GET(request: NextRequest, { params }: { params: { account: string } }) {
   try {
     try {
       const provider = getProvider()
-
       const { searchParams } = new URL(request.url)
-      const limit = searchParams.get('limit') !== ''
-      const seqNum = searchParams.get('sequence_number') !== ''
+      const limit = searchParams.get('limit')
+      const seqNum = searchParams.get('sequence_number')
       const ascending = searchParams.get('ascending') !== 'false'
       const irreversible = searchParams.get('irreversible') !== 'false'
       const decode_operations = searchParams.get('decode_operations') !== 'false'
       const decode_events = searchParams.get('decode_events') !== 'false'
 
-      await provider.getTransactionsById
-
-      const { values } = await provider!.call<{
+      const { values } = await provider.call<{
         values?: HistoryRecord[]
       }>('account_history.get_account_history', {
         address: params.account,
@@ -153,11 +145,10 @@ export async function GET(
       })
 
       if (!values) {
-        return []
+        return NextResponse.json([])
       }
 
       console.log(values)
-
       return NextResponse.json(values)
     } catch (error) {
       throw new AppError(getErrorMessage(error as Error))

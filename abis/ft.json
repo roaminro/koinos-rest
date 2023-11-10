@@ -1,48 +1,48 @@
 {
   "methods": {
     "name": {
-      "entry_point": "0x82a3537f",
+      "entry_point": 2191741823,
       "argument": "name_arguments",
       "return": "name_result",
       "read_only": true
     },
     "symbol": {
-      "entry_point": "0xb76a7ca1",
+      "entry_point": 3077209249,
       "argument": "symbol_arguments",
       "return": "symbol_result",
       "read_only": true
     },
     "decimals": {
-      "entry_point": "0xee80fd2f",
+      "entry_point": 4001430831,
       "argument": "decimals_arguments",
       "return": "decimals_result",
       "read_only": true
     },
     "total_supply": {
-      "entry_point": "0xb0da3934",
+      "entry_point": 2967091508,
       "argument": "total_supply_arguments",
       "return": "total_supply_result",
       "read_only": true
     },
     "balance_of": {
-      "entry_point": "0x5c721497",
+      "entry_point": 1550980247,
       "argument": "balance_of_arguments",
       "return": "balance_of_result",
       "read_only": true,
       "default_output": { "value": "0" }
     },
     "transfer": {
-      "entry_point": "0x27f576ca",
+      "entry_point": 670398154,
       "argument": "transfer_arguments",
       "return": "transfer_result"
     },
     "mint": {
-      "entry_point": "0xdc6f17bb",
+      "entry_point": 3698268091,
       "argument": "mint_arguments",
       "return": "mint_result"
     },
     "burn": {
-      "entry_point": "0x859facc5",
+      "entry_point": 2241834181,
       "argument": "burn_arguments",
       "return": "burn_result"
     }
