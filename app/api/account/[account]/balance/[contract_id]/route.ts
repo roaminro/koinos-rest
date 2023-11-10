@@ -42,16 +42,11 @@ export async function GET(
 
     const account = await getAccountAddress(params.account)
 
-    // console.log(contract)
-    // console.log(contract_id, account)
-
     try {
       const { result: balanceRes } = await contract.functions.balance_of({
         owner: account
       })
       const { result: decimalRes } = await contract.functions.decimals()
-
-      console.log(balanceRes, decimalRes)
 
       return Response.json({
         value: utils.formatUnits(balanceRes!.value, decimalRes!.value)
