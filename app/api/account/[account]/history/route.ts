@@ -21,14 +21,14 @@ import { NextRequest, NextResponse } from 'next/server'
  *      - name: limit
  *        schema:
  *          type: string
- *        in: path
+ *        in: query
  *        description: Number of records to be returned
- *        required: false
+ *        required: true
  *
  *      - name: sequence_number
  *        schema:
  *          type: string
- *        in: path
+ *        in: query
  *        description: Sequence number offset
  *        required: false
  *
@@ -148,7 +148,6 @@ export async function GET(request: NextRequest, { params }: { params: { account:
         return NextResponse.json([])
       }
 
-      console.log(values)
       return NextResponse.json(values)
     } catch (error) {
       throw new AppError(getErrorMessage(error as Error))
