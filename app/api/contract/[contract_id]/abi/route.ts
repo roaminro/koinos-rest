@@ -74,14 +74,15 @@ export async function GET(request: Request, { params }: { params: { contract_id:
         try {
           const root = new protobufjs.Root()
           for (const desc of pd) {
-            const parserResult = protobufjs.parse(desc.definition)
+            const parserResult = protobufjs.parse(desc.definition, {
+              keepCase: true
+            })
             root.add(parserResult.root)
           }
           // extract the first nested object
           abi.koilib_types = root.toJSON().nested?.['']
         } catch (error) {
           // ignore the parsing errors
-          console.log(error)
         }
       }
     }
