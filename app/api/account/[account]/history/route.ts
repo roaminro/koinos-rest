@@ -1,4 +1,6 @@
 import { AppError, getErrorMessage, handleError } from '@/utils/errors'
+import { decodeEvents } from '@/utils/events'
+import { decodeOperations } from '@/utils/operations'
 import { getProvider } from '@/utils/providers'
 import { interfaces } from 'koilib'
 import { NextRequest, NextResponse } from 'next/server'
@@ -144,8 +146,64 @@ export async function GET(request: NextRequest, { params }: { params: { account:
         ...(seqNum && { seq_num: seqNum })
       })
 
-      if (!values) {
-        return NextResponse.json([])
+      if (values && values.length > 0) {
+        const updatedValues = await Promise.all(
+          values.map(async (item) => {
+            if (item.trx) {
+              const { trx } = item
+              const eventsPromise =
+                decode_events && trx.receipt && trx.receipt.events
+                  ? decodeEvents(trx.receipt.events)
+                  : Promise.resolve(trx.receipt ? trx.receipt.events : undefined)
+              const operationsPromise =
+                decode_operations && trx.transaction && trx.transaction.operations
+                  ? decodeOperations(trx.transaction.operations)
+                  : Promise.resolve(trx.transaction ? trx.transaction.operations : undefined)
+
+              const [events, operations] = await Promise.all([eventsPromise, operationsPromise])
+
+              return {
+                ...item,
+                trx: {
+                  ...trx,
+                  receipt: {
+                    ...trx.receipt,
+                    events
+                  },
+                  transaction: {
+                    ...trx.transaction,
+                    operations
+                  }
+                }
+              }
+            }
+
+            if (item.block) {
+              const { block } = item
+              const eventsPromise =
+                decode_events && block.receipt && block.receipt.events
+                  ? decodeEvents(block.receipt.events)
+                  : Promise.resolve(block.receipt ? block.receipt.events : undefined)
+
+              const events = await eventsPromise
+
+              return {
+                ...item,
+                block: {
+                  ...block,
+                  receipt: {
+                    ...block.receipt,
+                    events
+                  }
+                }
+              }
+            }
+
+            return item
+          })
+        )
+
+        return NextResponse.json(updatedValues)
       }
 
       return NextResponse.json(values)
