@@ -21,17 +21,17 @@ import { interfaces } from 'koilib'
  *        schema:
  *          type: boolean
  *        in: query
- *        description: Wether or not the receipt content should be returned
+ *        description: Whether or not the receipt content should be returned
  *      - name: decode_operations
  *        schema:
  *          type: boolean
  *        in: query
- *        description: Wether or not the operations should be decoded
+ *        description: Whether or not the operations should be decoded
  *      - name: decode_events
  *        schema:
  *          type: boolean
  *        in: query
- *        description: Wether or not the events should be decoded
+ *        description: Whether or not the events should be decoded
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
