@@ -1,3 +1,4 @@
+import { getAddress } from '@/utils/addresses'
 import { AppError, getErrorMessage, handleError } from '@/utils/errors'
 import { decodeEvents } from '@/utils/events'
 import { decodeOperations } from '@/utils/operations'
@@ -134,10 +135,12 @@ export async function GET(request: NextRequest, { params }: { params: { account:
       const decode_operations = searchParams.get('decode_operations') !== 'false'
       const decode_events = searchParams.get('decode_events') !== 'false'
 
+      const account = await getAddress(params.account)
+
       const { values } = await provider.call<{
         values?: HistoryRecord[]
       }>('account_history.get_account_history', {
-        address: params.account,
+        address: account,
         limit,
         ascending,
         irreversible,
