@@ -213,15 +213,15 @@ export async function getContract(contractId: string, throwIfAbiMissing = true) 
   }
 
   const contractAddress = await getAddress(contractId)
-  // console.log(contractAddress)
+  console.log(contractAddress)
 
   // If it's a known contract, generate the contract
   if (
-    contractId === config.systemContracts.koin ||
-    contractId === config.systemContracts.vhp ||
-    contractId === config.contracts.kap
+    contractAddress === config.systemContracts.koin ||
+    contractAddress === config.systemContracts.vhp ||
+    contractAddress === config.contracts.kap
   ) {
-    contract = getContractsCache(contractId)
+    contract = getContractsCache(contractAddress)
     return contract
   }
 
