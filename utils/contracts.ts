@@ -7,6 +7,10 @@ import { getProvider } from './providers'
 import { config } from '@/app.config'
 import { getFTContract } from './tokens'
 import KapAbi from '@/abis/kap.json'
+import { createRedisInstance, getRandomKey } from '@/cache/redis'
+
+const redis = createRedisInstance()
+const randomKey = getRandomKey()
 
 export async function getContractId(str: string) {
   let contract_id = str
@@ -180,17 +184,45 @@ function getContractsCache(contractId: string): Contract | undefined {
   return CONTRACTS_CACHE[contractId]
 }
 
-function setContractsCache(contractId: string, contract: Contract) {
+async function setContractsCache(contractId: string, contract: Contract) {
   CONTRACTS_CACHE![contractId] = contract
+
+  try {
+    await redis.set(`${contractId}:${randomKey}`, JSON.stringify(contract), 'EX', 60)
+  } catch (err) {
+    console.error('Error setting contract in cache:', err)
+  }
 }
 
 export async function getContract(contractId: string, throwIfAbiMissing = true) {
   let contract = getContractsCache(contractId)
+
   if (contract) {
     if (throwIfAbiMissing && !contract.abi) {
       throw new AppError(`abi not available for contract ${contractId}`)
     }
 
+    return contract
+  }
+
+  // If it's a known contract, generate the contract
+  if (
+    contractId === config.systemContracts.koin ||
+    contractId === config.systemContracts.vhp ||
+    contractId === config.contracts.kap
+  ) {
+    contract = getContractsCache(contractId)
+    return contract
+  }
+
+  // Check Redis cache for the contract
+  const cachedContract = await redis.get(`${contractId}:${randomKey}`)
+
+  if (cachedContract) {
+    contract = JSON.parse(cachedContract)
+    if (throwIfAbiMissing && !contract?.abi) {
+      throw new AppError(`abi not available for contract ${contractId}`)
+    }
     return contract
   }
 
@@ -217,7 +249,7 @@ export async function getContract(contractId: string, throwIfAbiMissing = true) 
     })
   }
 
-  setContractsCache(contractId, contract)
+  await setContractsCache(contractId, contract)
 
   return contract
 }
