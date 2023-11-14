@@ -1,5 +1,4 @@
 import Redis, { RedisOptions } from 'ioredis'
-// import configuration from './configuration'
 
 function getRedisConfiguration(): {
   host: string | undefined

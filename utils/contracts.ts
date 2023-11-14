@@ -185,10 +185,17 @@ function getContractsCache(contractId: string): Contract | undefined {
 }
 
 async function setContractsCache(contractId: string, contract: Contract) {
-  CONTRACTS_CACHE![contractId] = contract
+  // CONTRACTS_CACHE![contractId] = contract
 
   try {
-    await redis.set(`${contractId}:${randomKey}`, JSON.stringify(contract), 'EX', 60)
+    await redis.set(
+      `${contractId}:${randomKey}`,
+      // contractId,
+      JSON.stringify(contract),
+      'EX',
+      60
+    )
+    console.log(`Contract cached successfully: ${contractId}`)
   } catch (err) {
     console.error('Error setting contract in cache:', err)
   }
@@ -205,6 +212,9 @@ export async function getContract(contractId: string, throwIfAbiMissing = true) 
     return contract
   }
 
+  const contractAddress = await getAddress(contractId)
+  // console.log(contractAddress)
+
   // If it's a known contract, generate the contract
   if (
     contractId === config.systemContracts.koin ||
@@ -216,6 +226,7 @@ export async function getContract(contractId: string, throwIfAbiMissing = true) 
   }
 
   // Check Redis cache for the contract
+  // const cachedContract = await redis.get(contractId)
   const cachedContract = await redis.get(`${contractId}:${randomKey}`)
 
   if (cachedContract) {
@@ -232,7 +243,9 @@ export async function getContract(contractId: string, throwIfAbiMissing = true) 
   })
 
   // fetch abi from node
+  console.log(`Fetching ABI for contractId: ${contractId}`)
   let abi = await contract.fetchAbi()
+  console.log(`ABI for contractId ${contractId}:`, abi)
 
   if (throwIfAbiMissing && !abi) {
     throw new AppError(`abi not available for contract ${contractId}`)
