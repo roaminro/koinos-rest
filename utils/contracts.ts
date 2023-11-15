@@ -7,7 +7,7 @@ import { getProvider } from './providers'
 import { config } from '@/app.config'
 import { getFTContract } from './tokens'
 import KapAbi from '@/abis/kap.json'
-import { createRedisInstance, getRandomKey } from '@/cache/redis'
+import { createRedisInstance, getRandomKey } from '@/utils/redis'
 
 const redis = createRedisInstance()
 const randomKey = getRandomKey()
@@ -188,14 +188,7 @@ async function setContractsCache(contractId: string, contract: Contract) {
   // CONTRACTS_CACHE![contractId] = contract
 
   try {
-    await redis.set(
-      `${contractId}:${randomKey}`,
-      // contractId,
-      JSON.stringify(contract),
-      'EX',
-      60
-    )
-    console.log(`Contract cached successfully: ${contractId}`)
+    await redis.set(contractId, JSON.stringify(contract.abi), 'EX', 60)
   } catch (err) {
     console.error('Error setting contract in cache:', err)
   }
@@ -212,22 +205,8 @@ export async function getContract(contractId: string, throwIfAbiMissing = true) 
     return contract
   }
 
-  const contractAddress = await getAddress(contractId)
-  console.log(contractAddress)
-
-  // If it's a known contract, generate the contract
-  if (
-    contractAddress === config.systemContracts.koin ||
-    contractAddress === config.systemContracts.vhp ||
-    contractAddress === config.contracts.kap
-  ) {
-    contract = getContractsCache(contractAddress)
-    return contract
-  }
-
   // Check Redis cache for the contract
-  // const cachedContract = await redis.get(contractId)
-  const cachedContract = await redis.get(`${contractId}:${randomKey}`)
+  const cachedContract = await redis.get(contractId)
 
   if (cachedContract) {
     contract = JSON.parse(cachedContract)
