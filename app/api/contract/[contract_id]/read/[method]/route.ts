@@ -56,7 +56,7 @@ export async function GET(
     try {
       const contract = await getContract(contract_id)
 
-      if (!contract.functions[method]) {
+      if (!contract?.functions[method]) {
         throw new AppError(`method "${method}" does not exist`)
       }
 
@@ -130,7 +130,7 @@ export async function POST(
     try {
       const contract = await getContract(contract_id)
 
-      if (!contract.functions[method]) {
+      if (!contract?.functions[method]) {
         throw new AppError(`method "${method}" does not exist`)
       }
 
