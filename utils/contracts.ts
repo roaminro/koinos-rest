@@ -7,10 +7,9 @@ import { getProvider } from './providers'
 import { config } from '@/app.config'
 import { getFTContract } from './tokens'
 import KapAbi from '@/abis/kap.json'
-import { createRedisInstance, getRandomKey } from '@/utils/redis'
+import { createRedisInstance } from '@/utils/redis'
 
 const redis = createRedisInstance()
-const randomKey = getRandomKey()
 
 export async function getContractId(str: string) {
   let contract_id = str
@@ -185,8 +184,6 @@ function getContractsCache(contractId: string): Contract | undefined {
 }
 
 async function setContractsCache(contractId: string, contract: Contract) {
-  // CONTRACTS_CACHE![contractId] = contract
-
   try {
     await redis.set(contractId, JSON.stringify(contract.abi), 'EX', 60)
   } catch (err) {
@@ -205,11 +202,16 @@ export async function getContract(contractId: string, throwIfAbiMissing = true) 
     return contract
   }
 
-  // Check Redis cache for the contract
-  const cachedContract = await redis.get(contractId)
+  // Check Redis cache for contract abi with the contractId key
+  const redisContractAbi = await redis.get(contractId)
 
-  if (cachedContract) {
-    contract = JSON.parse(cachedContract)
+  if (redisContractAbi) {
+    contract = new Contract({
+      id: contractId,
+      abi: JSON.parse(redisContractAbi),
+      provider: getProvider()
+    })
+
     if (throwIfAbiMissing && !contract?.abi) {
       throw new AppError(`abi not available for contract ${contractId}`)
     }
