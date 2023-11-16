@@ -37,6 +37,11 @@ export function createRedisInstance(config = getRedisConfiguration()) {
       options.password = config.password
     }
 
+    if (!options.host) {
+      console.warn('Starting without Redis support')
+      return undefined
+    }
+
     const redis = new Redis(options)
 
     redis.on('error', (error: unknown) => {

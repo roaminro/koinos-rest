@@ -183,7 +183,28 @@ function getContractsCache(contractId: string): Contract | undefined {
   return CONTRACTS_CACHE[contractId]
 }
 
-async function setContractsCache(contractId: string, contract: Contract) {
+function setContractsCache(contractId: string, contract: Contract) {
+  CONTRACTS_CACHE![contractId] = contract
+}
+
+async function getRedisCache(contractId: string) {
+  if (!redis) return
+
+  const redisContractAbi = await redis.get(contractId)
+
+  if (redisContractAbi) {
+    const contract = new Contract({
+      id: contractId,
+      abi: JSON.parse(redisContractAbi),
+      provider: getProvider()
+    })
+
+    return contract
+  }
+}
+
+async function setRedisCache(contractId: string, contract: Contract) {
+  if (!redis) return
   try {
     await redis.set(contractId, JSON.stringify(contract.abi), 'EX', 60)
   } catch (err) {
@@ -203,15 +224,9 @@ export async function getContract(contractId: string, throwIfAbiMissing = true) 
   }
 
   // Check Redis cache for contract abi with the contractId key
-  const redisContractAbi = await redis.get(contractId)
+  contract = await getRedisCache(contractId)
 
-  if (redisContractAbi) {
-    contract = new Contract({
-      id: contractId,
-      abi: JSON.parse(redisContractAbi),
-      provider: getProvider()
-    })
-
+  if (contract) {
     if (throwIfAbiMissing && !contract?.abi) {
       throw new AppError(`abi not available for contract ${contractId}`)
     }
@@ -224,9 +239,7 @@ export async function getContract(contractId: string, throwIfAbiMissing = true) 
   })
 
   // fetch abi from node
-  console.log(`Fetching ABI for contractId: ${contractId}`)
   let abi = await contract.fetchAbi()
-  console.log(`ABI for contractId ${contractId}:`, abi)
 
   if (throwIfAbiMissing && !abi) {
     throw new AppError(`abi not available for contract ${contractId}`)
@@ -243,7 +256,8 @@ export async function getContract(contractId: string, throwIfAbiMissing = true) 
     })
   }
 
-  await setContractsCache(contractId, contract)
+  await setRedisCache(contractId, contract)
+  setContractsCache(contractId, contract)
 
   return contract
 }
