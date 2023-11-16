@@ -38,7 +38,6 @@ export function createRedisInstance(config = getRedisConfiguration()) {
     }
 
     if (!options.host) {
-      console.warn('Starting without Redis support')
       return undefined
     }
 
