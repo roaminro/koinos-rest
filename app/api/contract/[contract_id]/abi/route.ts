@@ -18,6 +18,7 @@ import protobufjs from 'protobufjs'
  *        in: path
  *        description: Koinos address of the contract, name of the contract (for system contracts) or KAP name
  *        required: true
+ *        example: 15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *      200:
@@ -26,7 +27,33 @@ import protobufjs from 'protobufjs'
  *          application/json:
  *            schema:
  *              $ref: '#/components/schemas/ContractAbi'
+ *            example:
+ *              contract_id: "15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL"
+ *              abi:
+ *                methods:
+ *                  name:
+ *                    argument: "koinos.contracts.token.name_arguments"
+ *                    return: "koinos.contracts.token.name_result"
+ *                    entry-point: "0x82a3537f"
+ *                    description: "Returns the token name"
+ *                    read-only: true
+ *                    entry_point: 2191741823
+ *                    read_only: true
+ *                  # ... (other methods)
+ *                types: "CpUJCiJrb2lub3Mv..."
+ *                koilib_types:
+ *                  nested:
+ *                    koinos:
+ *                      nested:
+ *                        contracts:
+ *                          nested:
+ *                            token:
+ *                              nested:
+ *                                name_arguments:
+ *                                  fields: {}
+ *                                # ... (other types)
  */
+
 export async function GET(request: Request, { params }: { params: { contract_id: string } }) {
   try {
     const contract_id = await getContractId(params.contract_id)
