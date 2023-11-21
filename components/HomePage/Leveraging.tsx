@@ -1,11 +1,13 @@
 import { FC } from 'react'
 
-type LeveragingProps = {}
+type LeveragingProps = { optClassName?: string }
 
-const Leveraging: FC<LeveragingProps> = ({}) => {
+const Leveraging: FC<LeveragingProps> = ({ optClassName }) => {
   return (
-    <div className="w-full h-[100vh] flex flex-col md:flex-row items-start justify-center text-left text-gray-500 font-satoshi">
-      <div className="w-full h-[50vh] md:w-[50vw] md:h-[100vh] flex flex-row items-center justify-center py-4 px-8 box-border order-last md:order-first">
+    <section
+      className={`relative w-full h-[100dvh] flex flex-col md:flex-row items-start justify-center text-left text-gray-500 font-satoshi ${optClassName}`}
+    >
+      <div className="w-full h-[50vh] md:w-[50vw] md:h-[100dvh] flex flex-row items-center justify-center py-4 px-8 box-border order-last md:order-first">
         <div className="self-stretch flex-1 relative flex items-center justify-center">
           <span className="md:w-[480px] text-[14px] md:text-xl md:leading-[3.5vh]">
             <p className="m-0">
@@ -30,7 +32,7 @@ const Leveraging: FC<LeveragingProps> = ({}) => {
         </div>
       </div>
 
-      <div className="self-stretch bg-orangered w-full h-[50vh] md:w-[50vw] md:h-[100vh] flex flex-row items-center justify-center p-4 box-border text-center text-21xl text-white font-satoshi">
+      <div className="self-stretch bg-orangered w-full h-[50vh] md:w-[50vw] md:h-[100dvh] flex flex-row items-center justify-center p-4 box-border text-center text-21xl text-white font-satoshi">
         <div className="self-stretch relative flex items-center shrink-0">
           <span className="w-full md:leading-[10vh] md:text-29xl">
             <p className="m-0">
@@ -42,7 +44,7 @@ const Leveraging: FC<LeveragingProps> = ({}) => {
           </span>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

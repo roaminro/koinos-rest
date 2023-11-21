@@ -5,12 +5,14 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { FC } from 'react'
 
-type HeaderProps = {}
+type HeaderProps = { optClassName?: string }
 
-const Header: FC<HeaderProps> = ({}) => {
+const Header: FC<HeaderProps> = ({ optClassName }) => {
   return (
-    <div className="self-stretch rounded h-[100vh] flex flex-col items-center justify-center px-8 box-border gap-[32px] text-center text-5xl md:text-29xl text-gray-400 font-clash-display md:mt-[-45px]">
-      <b className="relative flex items-center md:w-[700px] md:h-[178px] shrink-0">
+    <section
+      className={`relative self-stretch rounded h-[100dvh] flex flex-col items-center justify-center px-8 box-border gap-[32px] text-center text-21xl md:text-[60px] text-gray-400 font-clash-display ${optClassName}`}
+    >
+      <b className="flex items-center shrink-0">
         <span className="w-full tracking-[0.06em] md:leading-[8vh]">
           <p className="m-0 ">Empower Your</p>
           <p className="m-0">Blockchain Development</p>
@@ -28,7 +30,7 @@ const Header: FC<HeaderProps> = ({}) => {
       >
         Get Started!
       </Button>
-    </div>
+    </section>
   )
 }
 

@@ -1,11 +1,13 @@
 import { FC } from 'react'
 
-type WelcomeProps = {}
+type WelcomeProps = { optClassName?: string }
 
-const Welcome: FC<WelcomeProps> = ({}) => {
+const Welcome: FC<WelcomeProps> = ({ optClassName }) => {
   return (
-    <div className="w-full h-[100vh] flex flex-col md:flex-row items-start justify-center text-center text-21xl text-whitesmoke-100 font-satoshi">
-      <div className="self-stretch bg-orangered w-full h-[50vh] md:w-[50vw] md:h-[100vh] flex flex-row items-center justify-center p-4 box-border">
+    <section
+      className={`relative w-full h-[100dvh] flex flex-col md:flex-row items-start justify-center text-center text-21xl text-whitesmoke-100 font-satoshi ${optClassName}`}
+    >
+      <div className="self-stretch bg-orangered w-full h-[50vh] md:w-[50vw] md:h-[100dvh] flex flex-row items-center justify-center p-4 box-border">
         <div className="self-stretch relative font-black flex items-center justify-center w-[480px] shrink-0 md:leading-[8vh] md:text-[60px]">
           <b>
             <p className="leading-[3.5vh]">{`Welcome to the `}</p>
@@ -16,7 +18,7 @@ const Welcome: FC<WelcomeProps> = ({}) => {
         </div>
       </div>
 
-      <div className="w-full h-[50vh] md:w-[50vw] md:h-[100vh] flex flex-row items-center justify-center py-4 px-8 box-border text-center md:text-left text-base md:text-xl text-gray-100">
+      <div className="w-full h-[50vh] md:w-[50vw] md:h-[100dvh] flex flex-row items-center justify-center py-4 px-8 box-border text-center md:text-left text-base md:text-xl text-gray-100">
         <span className="">
           <p className="m-0 text-gray-500 leading-[5vh] md:w-[480px]">
             {`Embark on a journey of innovation and efficiency with our suite of developer tools,
@@ -26,7 +28,7 @@ const Welcome: FC<WelcomeProps> = ({}) => {
           </p>
         </span>
       </div>
-    </div>
+    </section>
   )
 }
 

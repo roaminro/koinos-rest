@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="snap-y snap-mandatory">
       <body className={`${inter.className} no-scrollbar`}>
         <Providers>{children}</Providers>
       </body>

@@ -1,11 +1,13 @@
 import { FC } from 'react'
 
-type FooterProps = {}
+type FooterProps = { optClassName?: string }
 
-const Footer: FC<FooterProps> = ({}) => {
+const Footer: FC<FooterProps> = ({ optClassName }) => {
   return (
-    <footer className="bg-gray-200 w-full h-[100vh] flex flex-row items-center justify-center py-4 px-8 box-border text-left text-xs md:text-xl text-white font-satoshi">
-      <div className="relative leading-[4vh] md:leading-[5vh] md:w-[50vw]">
+    <section
+      className={`bg-gray-200 w-full h-[100dvh] flex flex-row items-center justify-center py-4 px-8 box-border text-left text-xs md:text-xl text-white font-satoshi ${optClassName}`}
+    >
+      <footer className="relative leading-[4vh] md:leading-[5vh] md:w-[50vw]">
         <p className="m-0 text-xl md:text-5xl md:pb-4">
           <b>Key Features</b>
         </p>
@@ -84,8 +86,8 @@ const Footer: FC<FooterProps> = ({}) => {
             </li>
           </ul>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </section>
   )
 }
 

@@ -1,16 +1,18 @@
 import Link from 'next/link'
 import { FC } from 'react'
 
-type AboutProps = {}
+type AboutProps = { optClassName?: string }
 
-const About: FC<AboutProps> = ({}) => {
+const About: FC<AboutProps> = ({ optClassName }) => {
   return (
-    <div className="w-full h-[100vh] flex flex-col md:flex-row items-start justify-center text-center text-21xl text-white font-satoshi">
-      <div className="self-stretch bg-orangered w-full h-[50vh] md:w-[50vw] md:h-[100vh] flex flex-row items-center justify-center p-4 box-border">
+    <section
+      className={`relative w-full h-[100dvh] flex flex-col md:flex-row items-start justify-center text-center text-21xl text-white font-satoshi ${optClassName}`}
+    >
+      <div className="self-stretch bg-orangered w-full h-[50vh] md:w-[50vw] md:h-[100dvh] flex flex-row items-center justify-center p-4 box-border">
         <b className="self-stretch relative flex items-center justify-center md:w-[480px] shrink-0 md:text-29xl">{`About Koinos `}</b>
       </div>
 
-      <div className="w-full h-[50vh] md:w-[50vw] md:h-[100vh] flex flex-row items-start justify-center py-4 px-8 box-border text-center md:text-left text-base md:text-xl text-gray-400">
+      <div className="w-full h-[50vh] md:w-[50vw] md:h-[100dvh] flex flex-row items-start justify-center py-4 px-8 box-border text-center md:text-left text-base md:text-xl text-gray-400">
         <div className="self-stretch flex-1 relative flex items-center justify-center">
           <span className="md:w-[480px]">
             <p className="m-0 leading-[3.5vh]">
@@ -53,7 +55,7 @@ const About: FC<AboutProps> = ({}) => {
           </span>
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 
