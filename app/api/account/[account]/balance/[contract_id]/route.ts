@@ -9,18 +9,20 @@ import { utils } from 'koilib'
  * /api/account/{account}/balance/{contract_id}:
  *   get:
  *     tags: [Accounts]
- *     description: Returns an input account's total balance of an input fungible token
+ *     description: Input a user's contract address & a system contract address to return the user contract address' total balance of a fungible token represented by the system contract address.Feel free to test the placeholder values and the respective response below before testing out your own data.
  *     parameters:
  *      - name: contract_id
  *        in: path
  *        schema:
  *          type: string
+ *          example: 15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL
  *        description: Koinos address of the contract, name of the contract (for system contracts) or KAP name
  *        required: true
  *      - name: account
+ *        in: path
  *        schema:
  *          type: string
- *        in: path
+ *          example: 1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS
  *        description: Koinos address of the account, name of the account (for system contracts) or KAP name
  *        required: true
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
@@ -30,7 +32,11 @@ import { utils } from 'koilib'
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Value'
+ *              type: object
+ *              properties:
+ *                value:
+ *                  type: string
+ *                  example: "16134.92705173"
  */
 export async function GET(
   request: Request,
