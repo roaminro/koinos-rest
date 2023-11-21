@@ -11,20 +11,21 @@ import { NextRequest, NextResponse } from 'next/server'
  * /api/account/{account}/history:
  *   get:
  *     tags: [Accounts]
- *     description: Returns the transaction history by inputting a Koinos address, a system contract name or a KAP name
+ *     description: Returns the transaction history by inputting either a their Koinos address, a system contract name, or a KAP name. Feel free to test the placeholder values and the respective response below before testing out your own data.
  *
  *     parameters:
  *      - name: account
+ *        in: path
  *        schema:
  *          type: string
- *        in: path
+ *          example: 1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS
  *        description: Can be a Koinos address, a system contract name or a KAP name
  *        required: true
- *
  *      - name: limit
+ *        in: query
  *        schema:
  *          type: string
- *        in: query
+ *          example: 2
  *        description: Number of records to be returned
  *        required: true
  *
