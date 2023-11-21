@@ -8,11 +8,11 @@ import { decodeOperations } from '@/utils/operations'
  * /api/decode/operations:
  *   post:
  *     tags: [Decode]
- *     description: This endpoint takes an array of 'encoded' operations and returns an array of 'decoded' operations.
+ *     description: This endpoint takes an array of 'encoded' operations and returns an array of 'decoded' operations. Feel free to test the example request body and response below before testing out your own data.
  *
  *     parameters:
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
- * 
+ *
  *     requestBody:
  *       description: Input is expected to be an array of 'encoded' operations.
  *       required: true
@@ -36,7 +36,7 @@ import { decodeOperations } from '@/utils/operations'
  *               - call_contract:
  *                   contract_id: '1D53GFQkL5TkQ9okuf6r3Gta3oeTMVgGJW'
  *                   entry_point: 3870180098
- *                   args: 'ChkALjP9GqkHsiTOnObJQiiQHSg6AtqVbaeREM_czhU='
+ *                   args: 'ChkALjP9GqkHsiTOnObJQiiQHSg6AtqVbaeREODhtjM='
  *
  *     responses:
  *       200:
@@ -45,13 +45,20 @@ import { decodeOperations } from '@/utils/operations'
  *           application/json:
  *             schema:
  *               type: object
+ *             example:
+ *               - call_contract:
+ *                   contract_id: '1D53GFQkL5TkQ9okuf6r3Gta3oeTMVgGJW'
+ *                   entry_point: "set_latest_price"
+ *                   args:
+ *                    token_address: "15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL"
+ *                    price: "107852000"
  */
 
 export async function POST(request: NextRequest) {
   try {
     try {
-      const operations= (await request.json()) as interfaces.OperationJson[]
-      const result=  await decodeOperations(operations)
+      const operations = (await request.json()) as interfaces.OperationJson[]
+      const result = await decodeOperations(operations)
 
       return NextResponse.json(result)
     } catch (error) {
