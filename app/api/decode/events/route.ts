@@ -21,19 +21,30 @@ import { decodeEvents } from '@/utils/events'
  *           schema:
  *             type: array
  *             items:
- *               $ref: '#/components/schemas/EncodedEvent'
+ *               type: object
+ *               properties:
+ *                 source:
+ *                   type: string
+ *                 name:
+ *                   type: string
+ *                 data:
+ *                   type: string
+ *                 impacted:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 sequence:
+ *                   type: integer
  *             example:
- *               - call_contract:
- *                   source: '18tWNU7E4yuQzz7hMVpceb9ixmaWLVyQsr'
- *                   name: 'koinos.contracts.token.burn_event'
- *                   data: 'ChkA7-Mh3yERswBXFp2UPvegxIiGAauR1O_zEM2RkHE='
- *                   impacted: ["1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS"]
- *               - call_contract:
- *                   sequence: 1
- *                   source: '15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL'
- *                   name: 'koinos.contracts.token.mint_event'
- *                   data: 'ChkA7-Mh3yERswBXFp2UPvegxIiGAauR1O_zELW7zHU='
- *                   impacted: ["1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS"]
+ *               - source: "18tWNU7E4yuQzz7hMVpceb9ixmaWLVyQsr"
+ *                 name: "koinos.contracts.token.burn_event"
+ *                 data: "ChkA7-Mh3yERswBXFp2UPvegxIiGAauR1O_zEM2RkHE="
+ *                 impacted: ["1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS"]
+ *               - sequence: 1
+ *                 source: "15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL"
+ *                 name: "koinos.contracts.token.mint_event"
+ *                 data: "ChkA7-Mh3yERswBXFp2UPvegxIiGAauR1O_zELW7zHU="
+ *                 impacted: ["1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS"]
  *
  *     responses:
  *       200:
@@ -42,41 +53,42 @@ import { decodeEvents } from '@/utils/events'
  *           application/json:
  *             schema:
  *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   source:
+ *                     type: string
+ *                   name:
+ *                     type: string
+ *                   data:
+ *                     type: object
+ *                     properties:
+ *                       from:
+ *                         type: string
+ *                       to:
+ *                         type: string
+ *                       value:
+ *                         type: string
+ *                   impacted:
+ *                     type: array
+ *                     items:
+ *                       type: string
+ *                   sequence:
+ *                     type: integer
  *               example:
- *                 - call_contract:
- *                    source: '18tWNU7E4yuQzz7hMVpceb9ixmaWLVyQsr'
- *                    name: 'koinos.contracts.token.burn_event'
- *                    data:
- *                      from: "1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS"
- *                      value: "237242573"
- *                    impacted: ["1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS"]
- *                 - call_contract:
- *                    sequence: 1
- *                    source: '15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL'
- *                    name: 'koinos.contracts.token.mint_event'
- *                    data:
- *                      to: "1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS"
- *                      value: "246619573"
- *                    impacted: ["1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS"]
- *
- * components:
- *   schemas:
- *     EncodedEvent:
- *             type: object
- *             properties:
- *               sequence:
- *                 type: integer
- *                 nullable: true
- *               source:
- *                 type: string
- *               name:
- *                 type: string
- *               data:
- *                 type: string
- *               impacted:
- *                 type: array
- *                 items:
- *                    type: string
+ *                 - source: "18tWNU7E4yuQzz7hMVpceb9ixmaWLVyQsr"
+ *                   name: "koinos.contracts.token.burn_event"
+ *                   data:
+ *                     from: "1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS"
+ *                     value: "237242573"
+ *                   impacted: ["1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS"]
+ *                 - sequence: 1
+ *                   source: "15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL"
+ *                   name: "koinos.contracts.token.mint_event"
+ *                   data:
+ *                     to: "1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS"
+ *                     value: "246619573"
+ *                   impacted: ["1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS"]
  */
 
 export async function POST(request: NextRequest) {
