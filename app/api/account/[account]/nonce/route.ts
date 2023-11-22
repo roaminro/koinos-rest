@@ -12,6 +12,7 @@ import { getProvider } from '@/utils/providers'
  *      - name: account
  *        schema:
  *          type: string
+ *          example: 1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS
  *        in: path
  *        description: Koinos address of the account, name of the account (for system contracts) or KAP name
  *        required: true
@@ -22,7 +23,12 @@ import { getProvider } from '@/utils/providers'
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Value'
+ *              type: object
+ *              properties:
+ *                value:
+ *                  type: string
+ *            example:
+ *              value: "KAk="
  */
 export async function GET(request: Request, { params }: { params: { account: string } }) {
   try {
