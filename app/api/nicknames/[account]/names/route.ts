@@ -8,24 +8,40 @@ import { getAddress } from '@/utils/addresses'
  * /api/nicknames/{account}/names:
  *   get:
  *     tags: [Nicknames]
- *     description: An account address is passed and the names owned by that account are returned.
+ *     description: Takes an account address and returns the nicknames owned by that account.
  *     parameters:
  *      - name: account
+ *        in: path
  *        schema:
  *          type: string
- *        in: path
- *        description: Nickname of the account
+ *        description: The account address or nickname for which to retrieve owned nicknames.
  *        required: true
+ *        example: '@jga'
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *
  *     responses:
  *       200:
- *        description: Nicknames
+ *        description: List of Nicknames Owned by the Account
  *        content:
  *          application/json:
  *            schema:
  *              type: object
+ *              properties:
+ *                names:
+ *                  type: array
+ *                  items:
+ *                    type: string
+ *            example:
+ *              names:
+ *                - "acidyo"
+ *                - "aggroed"
+ *                - "anomadsoul"
+ *                - "asgarth"
+ *                - "binance"
+ *                - "bitfinex"
+ *                - "bitflyer"
  */
+
 export async function GET(request: NextRequest, { params }: { params: { account: string } }) {
   try {
     const account = await getAddress(params.account)
