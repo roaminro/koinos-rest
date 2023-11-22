@@ -7,7 +7,7 @@ import { getFTContract } from '@/utils/tokens'
  * /api/ft/{contract_id}/name:
  *   get:
  *     tags: [Fungible Tokens]
- *     description: Returns the fungible token's name
+ *     description: Returns the name of the fungible token
  *     parameters:
  *      - name: contract_id
  *        in: path
@@ -15,15 +15,22 @@ import { getFTContract } from '@/utils/tokens'
  *          type: string
  *        description: Koinos address of the contract, name of the contract (for system contracts) or KAP name
  *        required: true
+ *        example: 15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
- *        description: Value
+ *        description: Token Name
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Value'
+ *              type: object
+ *              properties:
+ *                value:
+ *                  type: string
+ *            example:
+ *              value: "Koin"
  */
+
 export async function GET(request: Request, { params }: { params: { contract_id: string } }) {
   try {
     const contract_id = await getContractId(params.contract_id)
