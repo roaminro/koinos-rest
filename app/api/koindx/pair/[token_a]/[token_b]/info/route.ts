@@ -9,29 +9,72 @@ import { utils } from 'koilib'
  * /api/koindx/pair/{token_a}/{token_b}/info:
  *   get:
  *     tags: [Koindx]
- *     description: Returns the info of a pair
+ *     description: Returns information about a pair of tokens on koindx.com, including address, total supply, reserves, and other details.
  *     parameters:
  *      - name: token_a
+ *        in: path
  *        schema:
  *          type: string
- *        in: path
- *        description: Koinos address of the account, name of the account (for system contracts) or KAP name
+ *        description: The token symbol or Koinos address for the first token in the pair
  *        required: true
+ *        example: koin
  *      - name: token_b
+ *        in: path
  *        schema:
  *          type: string
- *        in: path
- *        description: Koinos address of the account, name of the account (for system contracts) or KAP name
+ *        description: The token symbol or Koinos address for the second token in the pair
  *        required: true
+ *        example: vhp
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
- *        description: Pair information
+ *        description: Detailed Information about the Token Pair
  *        content:
  *          application/json:
  *            schema:
  *              type: object
+ *              properties:
+ *                address:
+ *                  type: string
+ *                last_k:
+ *                  type: string
+ *                block_time:
+ *                  type: string
+ *                total_supply:
+ *                  type: string
+ *                token_a:
+ *                  type: object
+ *                  properties:
+ *                    address:
+ *                      type: string
+ *                    decimals:
+ *                      type: integer
+ *                reserve_a:
+ *                  type: string
+ *                token_b:
+ *                  type: object
+ *                  properties:
+ *                    address:
+ *                      type: string
+ *                    decimals:
+ *                      type: integer
+ *                reserve_b:
+ *                  type: string
+ *            example:
+ *              address: "1NqLghiFRwkXZR7NBFHHiCJkF5gLHyJap1"
+ *              last_k: "433521619319741500846139424"
+ *              block_time: "1700537446380"
+ *              total_supply: "207950.4194428"
+ *              token_a:
+ *                address: "vhp"
+ *                decimals: 8
+ *              reserve_a: "224194.27627671"
+ *              token_b:
+ *                address: "koin"
+ *                decimals: 8
+ *              reserve_b: "193450.03684994"
  */
+
 export async function GET(
   request: Request,
   { params }: { params: { token_a: string; token_b: string } }
