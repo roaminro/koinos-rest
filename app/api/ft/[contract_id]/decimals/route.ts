@@ -7,23 +7,31 @@ import { getFTContract } from '@/utils/tokens'
  * /api/ft/{contract_id}/decimals:
  *   get:
  *     tags: [Fungible Tokens]
- *     description: Returns the fungible token's decimals
+ *     description: Returns the number of decimals for a fungible token
  *     parameters:
  *      - name: contract_id
+ *        in: path
  *        schema:
  *          type: string
- *        in: path
  *        description: Koinos address of the contract, name of the contract (for system contracts) or KAP name
  *        required: true
+ *        example: 15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
- *        description: Value
+ *        description: Token decimals
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Value'
+ *              type: object
+ *              properties:
+ *                value:
+ *                  type: integer
+ *                  format: int32
+ *            example:
+ *              value: 8
  */
+
 export async function GET(request: Request, { params }: { params: { contract_id: string } }) {
   try {
     const contract_id = await getContractId(params.contract_id)
