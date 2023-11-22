@@ -12,19 +12,95 @@ import { NextRequest, NextResponse } from 'next/server'
  *     parameters:
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     requestBody:
- *      description: Arguments
+ *      description: Arguments for preparing a transaction
+ *      required: true
  *      content:
  *        application/json:
  *          schema:
  *            type: object
+ *            properties:
+ *              header:
+ *                type: object
+ *                properties:
+ *                  rc_limit:
+ *                    type: string
+ *                  payer:
+ *                    type: string
+ *              operations:
+ *                type: array
+ *                items:
+ *                  type: object
+ *                  properties:
+ *                    call_contract:
+ *                      type: object
+ *                      properties:
+ *                        contract_id:
+ *                          type: string
+ *                        entry_point:
+ *                          type: integer
+ *                        args:
+ *                          type: string
+ *          example:
+ *            header:
+ *              rc_limit: "200000000"
+ *              payer: "17CmTGbriMyCypF6WdTRJGhzur3SoJXAG5"
+ *            operations:
+ *              - call_contract:
+ *                  contract_id: "1D53GFQkL5TkQ9okuf6r3Gta3oeTMVgGJW"
+ *                  entry_point: 3870180098
+ *                  args: "ChkALjP9GqkHsiTOnObJQiiQHSg6AtqVbaeREODhtjM="
  *
  *     responses:
  *       200:
- *        description: Call response
+ *        description: Prepared Transaction Object
  *        content:
  *          application/json:
  *            schema:
  *              type: object
+ *              properties:
+ *                header:
+ *                  type: object
+ *                  properties:
+ *                    chain_id:
+ *                      type: string
+ *                    rc_limit:
+ *                      type: string
+ *                    nonce:
+ *                      type: string
+ *                    operation_merkle_root:
+ *                      type: string
+ *                    payer:
+ *                      type: string
+ *              operations:
+ *                type: array
+ *                items:
+ *                  type: object
+ *                  properties:
+ *                    call_contract:
+ *                      type: object
+ *                      properties:
+ *                        contract_id:
+ *                          type: string
+ *                        entry_point:
+ *                          type: integer
+ *                        args:
+ *                          type: string
+ *                    # Additional operation types can be defined here
+ *                id:
+ *                  type: string
+ *            example:
+ *              header:
+ *                chain_id: "EiBZK_GGVP0H_fXVAM3j6EAuz3-B-l3ejxRSewi7qIBfSA=="
+ *                rc_limit: "200000000"
+ *                nonce: "KOjwAw=="
+ *                operation_merkle_root: "EiCHTrIa6ArkSCYET7W9pivvrmlMf5SUi8gKaCPzUwtVAQ=="
+ *                payer: "17CmTGbriMyCypF6WdTRJGhzur3SoJXAG5"
+ *              operations:
+ *                - call_contract:
+ *                    contract_id: "1D53GFQkL5TkQ9okuf6r3Gta3oeTMVgGJW"
+ *                    entry_point: 3870180098
+ *                    args: "ChkALjP9GqkHsiTOnObJQiiQHSg6AtqVbaeREODhtjM="
+ *              id: "0x1220bb67dfdbdeea69d84bd11f1ffc358b9a846463cc2969ecab93c561b4a25b8d5e"
  */
 
 export async function POST(request: NextRequest) {
