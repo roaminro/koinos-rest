@@ -9,39 +9,35 @@ import { decodeOperations } from '@/utils/operations'
  * /api/block/{block_id}:
  *   get:
  *     tags: [Blocks]
- *     description: Returns the block
+ *     description: Input a block id or number. Return data about that block and its receipt.
  *     parameters:
  *      - name: block_id
+ *        in: path
  *        schema:
  *          type: string
- *        in: path
+ *          example: 1
  *        description: The block id or number
  *        required: true
- *
  *      - name: return_block
+ *        in: query
  *        schema:
  *          type: boolean
- *        in: query
- *        description: Wether or not the block content should be returned
- *
+ *        description: Whether or not the block content should be returned
  *      - name: return_receipt
+ *        in: query
  *        schema:
  *          type: boolean
- *        in: query
- *        description: Wether or not the receipts content should be returned
- *
+ *        description: Whether or not the receipts content should be returned
  *      - name: decode_operations
+ *        in: query
  *        schema:
  *          type: boolean
- *        in: query
- *        description: Wether or not the operations should be decoded
- *
+ *        description: Whether or not the operations should be decoded
  *      - name: decode_events
+ *        in: query
  *        schema:
  *          type: boolean
- *        in: query
- *        description: Wether or not the events should be decoded
- *
+ *        description: Whether or not the events should be decoded
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
@@ -50,12 +46,71 @@ import { decodeOperations } from '@/utils/operations'
  *          application/json:
  *            schema:
  *              type: object
+ *              properties:
+ *                block_id:
+ *                  type: string
+ *                block_height:
+ *                  type: string
+ *                block:
+ *                  type: object
+ *                  properties:
+ *                    id:
+ *                      type: string
+ *                    header:
+ *                      type: object
+ *                      properties:
+ *                        previous:
+ *                          type: string
+ *                        height:
+ *                          type: string
+ *                        timestamp:
+ *                          type: string
+ *                        previous_state_merkle_root:
+ *                          type: string
+ *                        transaction_merkle_root:
+ *                          type: string
+ *                        signer:
+ *                          type: string
+ *                    signature:
+ *                      type: string
+ *                receipt:
+ *                  type: object
+ *                  properties:
+ *                    id:
+ *                      type: string
+ *                    height:
+ *                      type: string
+ *                    network_bandwidth_used:
+ *                      type: string
+ *                    compute_bandwidth_used:
+ *                      type: string
+ *                    network_bandwidth_charged:
+ *                      type: string
+ *                    compute_bandwidth_charged:
+ *                      type: string
+ *            example:
+ *              block_id: "0x1220abe84016383095fde9ece4f0bee9cac4b371565eb9efb9827186d731bd5e6dac"
+ *              block_height: "1"
+ *              block:
+ *                id: "0x1220abe84016383095fde9ece4f0bee9cac4b371565eb9efb9827186d731bd5e6dac"
+ *                header:
+ *                  previous: "0x12200000000000000000000000000000000000000000000000000000000000000000"
+ *                  height: "1"
+ *                  timestamp: "1667675722652"
+ *                  previous_state_merkle_root: "EiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+ *                  transaction_merkle_root: "EiDjsMRCmPwcFJr79MiZb7kkJ65B5GSbk0yklZkbeFK4VQ=="
+ *                  signer: "19XRaiEsjNmDn4pd498hRVkJ4ymtRTWsVZ"
+ *                signature: "IDcDaVomEqOm3mmHbpyEUdBbomT8jyodKM-7ozfcfRsIBELv05LjAj7cAshQqV-1SUVe-ELW4k4gWEzQf8LPcfU="
+ *              receipt:
+ *                id: "0x1220abe84016383095fde9ece4f0bee9cac4b371565eb9efb9827186d731bd5e6dac"
+ *                height: "1"
+ *                network_bandwidth_used: "250"
+ *                compute_bandwidth_used: "59653"
+ *                network_bandwidth_charged: "250"
+ *                compute_bandwidth_charged: "58900"
  */
 
-export async function GET(
-  request: Request,
-  { params }: { params: { block_id: string } }
-) {
+export async function GET(request: Request, { params }: { params: { block_id: string } }) {
   try {
     const provider = getProvider()
 
@@ -81,7 +136,7 @@ export async function GET(
       }>('block_store.get_blocks_by_id', {
         return_block,
         return_receipt,
-        block_ids: [block_id],
+        block_ids: [block_id]
       })
     } else {
       blocks = await provider.call<{
@@ -99,7 +154,7 @@ export async function GET(
         return_receipt,
         num_blocks: 1,
         ancestor_start_height: block_id,
-        head_block_id: (await provider.getHeadInfo()).head_topology.id,
+        head_block_id: (await provider.getHeadInfo()).head_topology.id
       })
     }
 
@@ -115,15 +170,10 @@ export async function GET(
       }
 
       if (block.receipt.transaction_receipts) {
-        for (
-          let index = 0;
-          index < block.receipt.transaction_receipts.length;
-          index++
-        ) {
+        for (let index = 0; index < block.receipt.transaction_receipts.length; index++) {
           const receipt = block.receipt.transaction_receipts[index]
           if (receipt.events) {
-            block.receipt.transaction_receipts[index].events =
-              await decodeEvents(receipt.events)
+            block.receipt.transaction_receipts[index].events = await decodeEvents(receipt.events)
           }
         }
       }
