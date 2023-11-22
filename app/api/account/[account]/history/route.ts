@@ -11,67 +11,118 @@ import { NextRequest, NextResponse } from 'next/server'
  * /api/account/{account}/history:
  *   get:
  *     tags: [Accounts]
- *     description: Returns the transaction history by inputting a Koinos address, a system contract name or a KAP name
- *
+ *     description: Returns the transaction history by inputting either a their Koinos address, a system contract name, or a KAP name. Feel free to test the placeholder values and the respective response below before testing out your own data.
  *     parameters:
  *      - name: account
+ *        in: path
  *        schema:
  *          type: string
- *        in: path
+ *          example: 1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS
  *        description: Can be a Koinos address, a system contract name or a KAP name
  *        required: true
- *
  *      - name: limit
+ *        in: query
  *        schema:
  *          type: string
- *        in: query
+ *          example: 2
  *        description: Number of records to be returned
  *        required: true
- *
  *      - name: sequence_number
+ *        in: query
  *        schema:
  *          type: string
- *        in: query
  *        description: Sequence number offset
  *        required: false
- *
  *      - name: ascending
+ *        in: query
  *        schema:
  *          type: boolean
- *        in: query
  *        description: Arrange records in ascending or descending order.
  *        required: false
- *
  *      - name: irreversible
+ *        in: query
  *        schema:
  *          type: boolean
- *        in: query
  *        description: Choose if irreversible history records should be returned or not.
  *        required: false
- *
  *      - name: decode_operations
+ *        in: query
  *        schema:
  *          type: boolean
- *        in: query
  *        description: Whether or not the operations should be decoded
  *        required: false
- *
  *      - name: decode_events
+ *        in: query
  *        schema:
  *          type: boolean
- *        in: query
  *        description: Whether or not the events should be decoded
  *        required: false
- *
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
- *
  *     responses:
  *       200:
  *        description: Transaction
  *        content:
  *          application/json:
  *            schema:
- *              type: object
+ *              type: array
+ *              items:
+ *                type: object
+ *                properties:
+ *                  trx:
+ *                    type: object
+ *                    properties:
+ *                      transaction:
+ *                        type: object
+ *                        properties:
+ *                          id:
+ *                            type: string
+ *                          header:
+ *                            type: object
+ *                            properties:
+ *                              ... (header properties)
+ *                          operations:
+ *                            type: array
+ *                            items:
+ *                              type: object
+ *                              properties:
+ *                                ... (operation properties)
+ *                          signatures:
+ *                            type: array
+ *                            items:
+ *                              type: string
+ *                      receipt:
+ *                        type: object
+ *                        properties:
+ *                          id:
+ *                            type: string
+ *                          payer:
+ *                            type: string
+ *                          max_payer_rc:
+ *                            type: string
+ *                          rc_limit:
+ *                            type: string
+ *                          rc_used:
+ *                            type: string
+ *                          disk_storage_used:
+ *                            type: string
+ *                          network_bandwidth_used:
+ *                            type: string
+ *                          compute_bandwidth_used:
+ *                            type: string
+ *                          events:
+ *                            type: array
+ *                            items:
+ *                              type: object
+ *                              properties:
+ *                                ... (event properties)
+ *                  seq_num:
+ *                    type: string
+ *            example:
+ *              - trx:
+ *                  ... (transaction details)
+ *              - seq_num: "1"
+ *                trx:
+ *                  ... (transaction details)
  */
 
 export type BlockReceiptJson = {
