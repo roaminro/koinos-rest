@@ -8,23 +8,39 @@ import { utils } from 'koilib'
  * /api/nft/{contract_id}/info:
  *   get:
  *     tags: [Non Fungible Tokens]
- *     description: Returns the non fungible token's info
+ *     description: Returns information about the non fungible token, such as its name, symbol, total supply, and URI.
  *     parameters:
  *      - name: contract_id
  *        in: path
  *        schema:
  *          type: string
- *        description: Koinos address of the contract, name of the contract (for system contracts) or KAP name
+ *        description: The Koinos address of the NFT contract.
  *        required: true
+ *        example: 1N2AhqGGticZ8hYmwNPWoroEBvTp3YGsLW
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
- *        description: NftInfo
+ *        description: Information about the Non Fungible Token
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/NftInfo'
+ *              type: object
+ *              properties:
+ *                name:
+ *                  type: string
+ *                symbol:
+ *                  type: string
+ *                total_supply:
+ *                  type: string
+ *                uri:
+ *                  type: string
+ *            example:
+ *              name: "OG-REX"
+ *              symbol: "REX"
+ *              total_supply: "350"
+ *              uri: "https://ogrex.io/api/rex/"
  */
+
 export async function GET(request: Request, { params }: { params: { contract_id: string } }) {
   try {
     const contract_id = await getContractId(params.contract_id)
