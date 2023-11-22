@@ -7,23 +7,30 @@ import { getAddress } from '@/utils/addresses'
  * /api/nicknames/{account}/address:
  *   get:
  *     tags: [Nicknames]
- *     description: Takes a token's nickname and the owner of that nickname is returned.
+ *     description: Retrieves the owner address associated with a given nickname.
  *     parameters:
  *      - name: account
+ *        in: path
  *        schema:
  *          type: string
- *        in: path
- *        description: Input nickname used to retrieve the owner address
+ *        description: The nickname used to retrieve the owner's address.
  *        required: true
+ *        example: '@jga'
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
- *        description: Nickname owner
+ *        description: Owner's Address of the Nickname
  *        content:
  *          application/json:
  *            schema:
  *              type: object
+ *              properties:
+ *                address:
+ *                  type: string
+ *            example:
+ *              address: "1MdqwaSBy6rbasPJ9vmg2pZFJSVZ29GFpZ"
  */
+
 export async function GET(request: NextRequest, { params }: { params: { account: string } }) {
   try {
     try {
