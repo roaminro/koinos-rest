@@ -9,7 +9,7 @@ import { utils } from 'koilib'
  * /api/ft/{contract_id}/balance/{account}:
  *   get:
  *     tags: [Fungible Tokens]
- *     description: Returns the fungible token's total supply
+ *     description: Returns the fungible token balance for a specific account
  *     parameters:
  *      - name: contract_id
  *        in: path
@@ -17,21 +17,29 @@ import { utils } from 'koilib'
  *          type: string
  *        description: Koinos address of the contract, name of the contract (for system contracts) or KAP name
  *        required: true
+ *        example: 15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL
  *      - name: account
+ *        in: path
  *        schema:
  *          type: string
- *        in: path
  *        description: Koinos address of the account, name of the account (for system contracts) or KAP name
  *        required: true
+ *        example: 1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
- *        description: Value
+ *        description: Account balance
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Value'
+ *              type: object
+ *              properties:
+ *                value:
+ *                  type: string
+ *            example:
+ *              value: "16182.6312157"
  */
+
 export async function GET(
   request: Request,
   { params }: { params: { contract_id: string; account: string } }
