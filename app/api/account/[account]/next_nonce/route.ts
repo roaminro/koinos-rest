@@ -10,9 +10,10 @@ import { getProvider } from '@/utils/providers'
  *     description: Returns the account's next nonce
  *     parameters:
  *      - name: account
+ *        in: path
  *        schema:
  *          type: string
- *        in: path
+ *          example: 1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS
  *        description: Koinos address of the account, name of the account (for system contracts) or KAP name
  *        required: true
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
@@ -22,7 +23,12 @@ import { getProvider } from '@/utils/providers'
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Value'
+ *              type: object
+ *              properties:
+ *                value:
+ *                  type: string
+ *            example:
+ *              value: "KAo="
  */
 export async function GET(request: Request, { params }: { params: { account: string } }) {
   try {
