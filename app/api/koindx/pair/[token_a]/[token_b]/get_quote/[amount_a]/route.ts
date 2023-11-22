@@ -8,35 +8,47 @@ import { getProvider } from '@/utils/providers'
  * /api/koindx/pair/{token_a}/{token_b}/get_quote/{amount_a}:
  *   get:
  *     tags: [Koindx]
- *     description: Returns the info of a pair
+ *     description: Returns the quote for a given amount of token A in terms of token B
  *     parameters:
  *      - name: token_a
+ *        in: path
  *        schema:
  *          type: string
- *        in: path
- *        description: Koinos address of the account, name of the account (for system contracts) or KAP name
+ *        description: The token symbol or Koinos address for the first token in the pair
  *        required: true
+ *        example: koin
  *      - name: token_b
+ *        in: path
  *        schema:
  *          type: string
- *        in: path
- *        description: Koinos address of the account, name of the account (for system contracts) or KAP name
+ *        description: The token symbol or Koinos address for the second token in the pair
  *        required: true
+ *        example: vhp
  *      - name: amount_a
+ *        in: path
  *        schema:
  *          type: string
- *        in: path
- *        description: Koinos address of the account, name of the account (for system contracts) or KAP name
+ *        description: The amount of token A for which to get the quote
  *        required: true
+ *        example: 1
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
- *        description: Pair information
+ *        description: Quote for Token A in terms of Token B
  *        content:
  *          application/json:
  *            schema:
  *              type: object
+ *              properties:
+ *                amount_a:
+ *                  type: string
+ *                amount_b:
+ *                  type: string
+ *            example:
+ *              amount_a: "1"
+ *              amount_b: "1.15892599"
  */
+
 export async function GET(
   request: Request,
   { params }: { params: { token_a: string; token_b: string; amount_a: string } }
