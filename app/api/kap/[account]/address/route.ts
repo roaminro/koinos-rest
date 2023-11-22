@@ -6,22 +6,28 @@ import { AppError, getErrorMessage, handleError } from '@/utils/errors'
  * /api/kap/{name}/address:
  *   get:
  *     tags: [Koinos Account Protocol]
- *     description: Returns the KAP name's address
+ *     description: Returns the address associated with a Koinos Account Protocol (KAP) name
  *     parameters:
  *      - name: name
+ *        in: path
  *        schema:
  *          type: string
- *        in: path
  *        description: KAP name to retrieve the address for
  *        required: true
+ *        example: kuixi.koin
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
- *        description: Value
+ *        description: KAP Address
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Value'
+ *              type: object
+ *              properties:
+ *                address:
+ *                  type: string
+ *            example:
+ *              address: "1KuiXi7Kdby37k9cW6RNDk2ZMJvDKBMa5q"
  */
 
 export async function GET(request: Request, { params }: { params: { account: string } }) {
