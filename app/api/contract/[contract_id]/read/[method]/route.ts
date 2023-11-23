@@ -15,16 +15,20 @@ import { AppError, handleError, getErrorMessage } from '@/utils/errors'
  *          type: string
  *        description: Koinos address of the contract, name of the contract (for system contracts) or KAP name
  *        required: true
+ *        example: 15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL
  *      - name: method
  *        in: path
  *        schema:
  *          type: string
  *        description: Method of the contract to call
  *        required: true
+ *        example: balance_of
  *      - name: arguments
  *        in: query
  *        schema:
  *          type: object
+ *        example:
+ *          owner: "1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS"
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
@@ -33,7 +37,10 @@ import { AppError, handleError, getErrorMessage } from '@/utils/errors'
  *          application/json:
  *            schema:
  *              type: object
+ *            example:
+ *              value: "1607990396956"
  */
+
 export async function GET(
   request: Request,
   { params }: { params: { contract_id: string; method: string } }
@@ -56,7 +63,7 @@ export async function GET(
     try {
       const contract = await getContract(contract_id)
 
-      if (!contract.functions[method]) {
+      if (!contract?.functions[method]) {
         throw new AppError(`method "${method}" does not exist`)
       }
 
@@ -85,7 +92,7 @@ export async function GET(
  * /api/contract/{contract_id}/read/{method}:
  *   post:
  *     tags: [Contracts]
- *     description: Read the contract contract using the method and arguments provided
+ *     description: Read the contract using the method and arguments provided
  *     parameters:
  *      - name: contract_id
  *        in: path
@@ -93,21 +100,24 @@ export async function GET(
  *          type: string
  *        description: Koinos address of the contract, name of the contract (for system contracts) or KAP name
  *        required: true
+ *        example: 15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL
  *      - name: method
  *        in: path
  *        schema:
  *          type: string
  *        description: Method of the contract to call
  *        required: true
+ *        example: balance_of
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
- *
  *     requestBody:
- *      description: Arguments
+ *      description: Arguments for the method call
+ *      required: true
  *      content:
  *        application/json:
  *          schema:
  *            type: object
- *
+ *          example:
+ *            owner: "1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS"
  *     responses:
  *       200:
  *        description: Call response
@@ -115,6 +125,8 @@ export async function GET(
  *          application/json:
  *            schema:
  *              type: object
+ *            example:
+ *              value: "1607990396956"
  */
 
 export async function POST(
@@ -130,7 +142,7 @@ export async function POST(
     try {
       const contract = await getContract(contract_id)
 
-      if (!contract.functions[method]) {
+      if (!contract?.functions[method]) {
         throw new AppError(`method "${method}" does not exist`)
       }
 

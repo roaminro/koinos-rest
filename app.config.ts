@@ -16,6 +16,7 @@ export const config: Config = {
     resources: '1HGN9h47CzoFwU2bQZwe6BYoX4TM6pXc4b'
   },
   contracts: {
-    kap: '13tmzDmfqCsbYT26C4CmKxq86d33senqH3'
+    kap: '13tmzDmfqCsbYT26C4CmKxq86d33senqH3',
+    nicknames:'1KD9Es7LBBjA1FY3ViCgQJ7e6WH1ipKbhz'
   }
 }

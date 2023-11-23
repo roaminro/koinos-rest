@@ -7,6 +7,9 @@ import { getProvider } from './providers'
 import { config } from '@/app.config'
 import { getFTContract } from './tokens'
 import KapAbi from '@/abis/kap.json'
+import { createRedisInstance } from '@/utils/redis'
+
+const redis = createRedisInstance()
 
 export async function getContractId(str: string) {
   let contract_id = str
@@ -184,13 +187,49 @@ function setContractsCache(contractId: string, contract: Contract) {
   CONTRACTS_CACHE![contractId] = contract
 }
 
+async function getRedisCache(contractId: string) {
+  if (!redis) return
+
+  const redisContractAbi = await redis.get(contractId)
+
+  if (redisContractAbi) {
+    const contract = new Contract({
+      id: contractId,
+      abi: JSON.parse(redisContractAbi),
+      provider: getProvider()
+    })
+
+    return contract
+  }
+}
+
+async function setRedisCache(contractId: string, contract: Contract) {
+  if (!redis) return
+  try {
+    await redis.set(contractId, JSON.stringify(contract.abi), 'EX', 60)
+  } catch (err) {
+    console.error('Error setting contract in cache:', err)
+  }
+}
+
 export async function getContract(contractId: string, throwIfAbiMissing = true) {
   let contract = getContractsCache(contractId)
+
   if (contract) {
     if (throwIfAbiMissing && !contract.abi) {
       throw new AppError(`abi not available for contract ${contractId}`)
     }
 
+    return contract
+  }
+
+  // Check Redis cache for contract abi with the contractId key
+  contract = await getRedisCache(contractId)
+
+  if (contract) {
+    if (throwIfAbiMissing && !contract?.abi) {
+      throw new AppError(`abi not available for contract ${contractId}`)
+    }
     return contract
   }
 
@@ -217,6 +256,7 @@ export async function getContract(contractId: string, throwIfAbiMissing = true) 
     })
   }
 
+  await setRedisCache(contractId, contract)
   setContractsCache(contractId, contract)
 
   return contract

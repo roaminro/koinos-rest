@@ -7,29 +7,37 @@ import { getNFTContract } from '@/utils/tokens'
  * /api/nft/{contract_id}/balance/{account}:
  *   get:
  *     tags: [Non Fungible Tokens]
- *     description: Returns the non fungible token's account balance
+ *     description: Returns the non fungible token's account balance.
  *     parameters:
  *      - name: contract_id
  *        in: path
  *        schema:
  *          type: string
- *        description: Koinos address of the contract, name of the contract (for system contracts) or KAP name
+ *        description: The Koinos address of the NFT contract.
  *        required: true
+ *        example: 1N2AhqGGticZ8hYmwNPWoroEBvTp3YGsLW
  *      - name: account
  *        in: path
  *        schema:
  *          type: string
- *        description: Koinos address of the account, name of the account (for system contracts) or KAP name
+ *        description: The Koinos address of the account to query.
  *        required: true
+ *        example: 1DrBJQkSK1Zh7JW7XjQxcRU96NBVnew7iR
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
- *        description: Value
+ *        description: Account Balance in NFTs
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Value'
+ *              type: object
+ *              properties:
+ *                value:
+ *                  type: string
+ *            example:
+ *              value: "5"
  */
+
 export async function GET(
   request: Request,
   { params }: { params: { contract_id: string; account: string } }

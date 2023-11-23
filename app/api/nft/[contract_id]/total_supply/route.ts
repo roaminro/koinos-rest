@@ -7,23 +7,30 @@ import { getNFTContract } from '@/utils/tokens'
  * /api/nft/{contract_id}/total_supply:
  *   get:
  *     tags: [Non Fungible Tokens]
- *     description: Returns the non fungible token's total supply
+ *     description: Returns the total supply of the non fungible token.
  *     parameters:
  *      - name: contract_id
  *        in: path
  *        schema:
  *          type: string
- *        description: Koinos address of the contract, name of the contract (for system contracts) or KAP name
+ *        description: The Koinos address of the NFT contract.
  *        required: true
+ *        example: 1N2AhqGGticZ8hYmwNPWoroEBvTp3YGsLW
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
- *        description: Value
+ *        description: Total Supply of the Non Fungible Token
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Value'
+ *              type: object
+ *              properties:
+ *                value:
+ *                  type: string
+ *            example:
+ *              value: "350"
  */
+
 export async function GET(request: Request, { params }: { params: { contract_id: string } }) {
   try {
     const contract_id = await getContractId(params.contract_id)

@@ -1,42 +1,45 @@
 import { getAddress } from '@/utils/addresses'
 import { AppError, getErrorMessage, handleError } from '@/utils/errors'
+import { getProvider } from '@/utils/providers'
+import { utils } from 'koilib'
 
 /**
  * @swagger
- * /api/kap/{name}/address:
+ * /api/account/{account}/mana:
  *   get:
- *     tags: [Koinos Account Protocol]
- *     description: Returns the address associated with a Koinos Account Protocol (KAP) name
+ *     tags: [Accounts]
+ *     description: Return the account's available mana.
  *     parameters:
- *      - name: name
+ *      - name: account
  *        in: path
  *        schema:
  *          type: string
- *        description: KAP name to retrieve the address for
+ *          example: 1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS
+ *        description: Koinos address of the account, name of the account (for system contracts) or KAP name
  *        required: true
- *        example: kuixi.koin
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
  *       200:
- *        description: KAP Address
+ *        description: Value
  *        content:
  *          application/json:
  *            schema:
  *              type: object
  *              properties:
- *                address:
+ *                value:
  *                  type: string
  *            example:
- *              address: "1KuiXi7Kdby37k9cW6RNDk2ZMJvDKBMa5q"
+ *              value: "19.43467354"
  */
 
 export async function GET(request: Request, { params }: { params: { account: string } }) {
   try {
+    const provider = getProvider()
+    const account = await getAddress(params.account)
     try {
-      const address = await getAddress(params.account)
-
+      const rc = await provider.getAccountRc(account)
       return Response.json({
-        address
+        value: utils.formatUnits(rc, 8)
       })
     } catch (error) {
       throw new AppError(getErrorMessage(error as Error))
