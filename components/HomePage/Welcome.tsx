@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { TypingText } from './Typing'
 
 type WelcomeProps = { optClassName?: string }
 
@@ -26,6 +27,14 @@ const Welcome: FC<WelcomeProps> = ({ optClassName }) => {
               developer or new to the field, our tools are designed to streamline your development
               process on this cutting-edge platform.`}
           </p>
+
+          {/* <TypingText
+            title={`Embark on a journey of innovation and efficiency with our suite of developer tools,
+              expertly crafted for the Koinos blockchain. Whether you're an experienced blockchain
+              developer or new to the field, our tools are designed to streamline your development
+              process on this cutting-edge platform.`}
+            textStyles="m-0 text-gray-500 leading-[5vh] md:w-[480px]"
+          /> */}
         </span>
       </div>
     </section>

@@ -1,9 +1,11 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 import { FC, ReactNode } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { navVariants } from '@/utils/motion'
 
 type ActiveLinkProps = {
   href: string
@@ -29,7 +31,12 @@ type NavProps = { optClassName?: string }
 
 const Nav: FC<NavProps> = ({}) => {
   return (
-    <section className="fixed z-5 w-full h-8 flex flex-row flex-wrap items-center justify-between py-2 px-6 box-border text-left text-orangered">
+    <motion.section
+      variants={navVariants}
+      initial="hidden"
+      whileInView="show"
+      className="z-5 mt-1 w-full h-8 flex flex-row flex-wrap items-center justify-between px-6 box-border text-left text-orangered"
+    >
       <div className="rounded-9xl flex flex-row items-center justify-start gap-[8px]">
         <Image className="rounded-9xl" alt="" src="/frame-10.svg" width={16} height={16} />
         <p className="font-semibold m-0">Koinos Tools</p>
@@ -42,7 +49,7 @@ const Nav: FC<NavProps> = ({}) => {
 
         <ActiveLink href="/swagger">API</ActiveLink>
       </nav>
-    </section>
+    </motion.section>
   )
 }
 

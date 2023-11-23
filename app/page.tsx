@@ -7,8 +7,6 @@ import Leveraging from '@/components/HomePage/Leveraging'
 import Nav from '@/components/HomePage/Nav'
 import Welcome from '@/components/HomePage/Welcome'
 
-import ReactFullpage from '@fullpage/react-fullpage'
-
 export default function Home() {
   return (
     <main className="relative flex flex-col items-center justify-start bg-whitesmoke-200 w-full h-full overflow-hidden pt-4 box-border font-clash-display snap-container no-scrollbar">
