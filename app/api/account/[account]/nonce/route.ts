@@ -14,7 +14,7 @@ import { getProvider } from '@/utils/providers'
  *          type: string
  *          example: 1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS
  *        in: path
- *        description: Koinos address of the account, name of the account (for system contracts) or KAP name
+ *        description: 1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS is the account address of the fungible token.  Alternatively, the nickname of the address, burnkoin, can also be used. Its KAP names can also be used, however, this contract address does not have any registered yet.
  *        required: true
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
