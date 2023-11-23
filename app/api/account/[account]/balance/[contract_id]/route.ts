@@ -9,21 +9,21 @@ import { utils } from 'koilib'
  * /api/account/{account}/balance/{contract_id}:
  *   get:
  *     tags: [Accounts]
- *     description: Input a user's contract address & a system contract address to return the user contract address' total balance of a fungible token represented by the system contract address.Feel free to test the placeholder values and the respective response below before testing out your own data.
+ *     description: Retrieves the balance of a specific fungible token for a given account. The balance is determined by the contract address of the token. The example demonstrates how to query the balance of the token with contract ID 15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL for the account with address 1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS.
  *     parameters:
  *      - name: contract_id
  *        in: path
  *        schema:
  *          type: string
  *          example: 15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL
- *        description: Koinos address of the contract, name of the contract (for system contracts) or KAP name
+ *        description: 15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL is the contract address of the fungible token.  Alternatively, the name of the contract, KOIN, can also be used. Its KAP names can also be used, however, this contract address does not have any registered yet.
  *        required: true
  *      - name: account
  *        in: path
  *        schema:
  *          type: string
  *          example: 1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS
- *        description: Koinos address of the account, name of the account (for system contracts) or KAP name
+ *        description: 1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS is the account address of the fungible token.  Alternatively, the nickname of the address, burnkoin, can also be used. Its KAP names can also be used, however, this contract address does not have any registered yet.
  *        required: true
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:
