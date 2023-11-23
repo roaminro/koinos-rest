@@ -18,7 +18,7 @@ import { NextRequest, NextResponse } from 'next/server'
  *        schema:
  *          type: string
  *          example: 1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS
- *        description: Can be a Koinos address, a system contract name or a KAP name
+ *        description: 1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS is the account address of the fungible token.  Alternatively, the nickname of the address, burnkoin, can also be used. Its KAP names can also be used, however, this contract address does not have any registered yet. The same logic applies to contract addresses such as 15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL.
  *        required: true
  *      - name: limit
  *        in: query
