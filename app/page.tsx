@@ -1,16 +1,73 @@
-import Link from 'next/link'
+// 'use client'
+
+import About from '@/components/HomePage/About'
+import Footer from '@/components/HomePage/Footer'
+import Header from '@/components/HomePage/Header'
+import Leveraging from '@/components/HomePage/Leveraging'
+import Nav from '@/components/HomePage/Nav'
+import Welcome from '@/components/HomePage/Welcome'
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          A REST API for Koinos
-        </p>
-        <p className="fixed left-0 flex w-full justify-center border border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          <Link href="/swagger">Explore Swagger</Link>
-        </p>
+    <main className="relative flex flex-col items-center justify-start bg-whitesmoke-200 w-full h-full overflow-hidden pt-4 box-border font-clash-display snap-container no-scrollbar">
+      {/* <ReactFullpage
+        scrollingSpeed={1000}
+        render={({}) => {
+          return (
+            <ReactFullpage.Wrapper>
+              <div className="section">
+                <Nav />
+                <Header />
+              </div>
+              <div className="section">
+                <Welcome />
+              </div>
+              <div className="section">
+                <Leveraging />
+              </div>
+              <div className="section">
+                <About />
+              </div>
+              <div className="section">
+                <Footer />
+              </div>
+            </ReactFullpage.Wrapper>
+          )
+        }}
+      /> */}
+
+      <Nav />
+      <Header />
+      <Welcome />
+      <Leveraging />
+      <About />
+      <Footer />
+
+      {/* <Nav />
+        <Header optClassName="child" />
+        <Welcome optClassName="child" />
+        <Leveraging optClassName="child" />
+        <About optClassName="child" />
+        <Footer optClassName="child" /> */}
+
+      {/* <div className="snap-start">
+        <Nav />
       </div>
+      <div className="snap-start">
+        <Header />
+      </div>
+      <div className="snap-start">
+        <Welcome />
+      </div>
+      <div className="snap-start">
+        <Leveraging />
+      </div>
+      <div className="snap-start">
+        <About />
+      </div>
+      <div className="snap-start">
+        <Footer />
+      </div> */}
     </main>
   )
 }

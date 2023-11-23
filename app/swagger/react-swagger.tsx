@@ -8,7 +8,7 @@ type Props = {
 }
 
 function ReactSwagger({ spec }: Props) {
-  return <SwaggerUI spec={spec} />
+  return <SwaggerUI spec={spec} docExpansion="none" />
 }
 
 export default ReactSwagger
