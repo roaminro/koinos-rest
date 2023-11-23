@@ -39,16 +39,16 @@ const Header: FC<HeaderProps> = ({ optClassName }) => {
 
   return (
     <section
-      className={`relative self-stretch rounded h-[100dvh] flex flex-col items-center justify-center px-8 box-border gap-[32px] text-center text-21xl md:text-[60px] text-gray-400 font-clash-display ${optClassName}`}
+      className={`relative self-stretch rounded h-[100dvh] flex flex-col items-center justify-center px-8 box-border gap-[32px] text-center text-21xl md:text-[70px] text-gray-400 font-clash-display ${optClassName}`}
     >
       <b className="flex items-center shrink-0 translate-y-[-50px]">
-        <span className="w-full tracking-[0.06em] md:leading-[8vh]">
-          <p className="m-0 flex items-center justify-center gap-x-[20px]">
+        <span className="w-full tracking-[0.06em] md:leading-[10vh]">
+          <p className="m-0 md:flex md:items-center md:justify-center md:gap-x-[20px]">
             <TypeWriterText text="Empower" />
             Your
           </p>
           <p className="m-0">Blockchain Development</p>
-          <p className="m-0 flex items-center justify-center gap-x-[20px]">
+          <p className="m-0 flex items-center justify-center gap-x-[10px] md:gap-x-[20px]">
             {`on  `}
             <TypeWriterText text=" Koinos" />
           </p>
