@@ -9,7 +9,7 @@ const headers = {
 
 export function middleware(request: Request) {
   if (request.method === 'OPTIONS') {
-    return NextResponse.json({}, { headers })
+    return NextResponse.json(null, { status: 204, headers })
   }
 }
 
