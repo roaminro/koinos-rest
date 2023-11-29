@@ -10,6 +10,7 @@ import { utils } from 'koilib'
  *   get:
  *     tags: [Accounts]
  *     description: Retrieves the balance of a specific fungible token for a given account. The balance is determined by the contract address of the token. The example demonstrates how to query the balance of the token with contract ID 15DJN4a8SgrbGhhGksSBASiSYjGnMU8dGL for the account with address 1NsQbH5AhQXgtSNg1ejpFqTi2hmCWz1eQS.
+ *     summary: Retrieves the balance of a specific fungible token for a given account.
  *     parameters:
  *      - name: contract_id
  *        in: path

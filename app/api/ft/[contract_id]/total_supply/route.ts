@@ -9,6 +9,7 @@ import { utils } from 'koilib'
  *   get:
  *     tags: [Fungible Tokens]
  *     description: Returns the total supply of the fungible token
+ *     summary: Retrieves the total supply of a specific fungible token.
  *     parameters:
  *      - name: contract_id
  *        in: path

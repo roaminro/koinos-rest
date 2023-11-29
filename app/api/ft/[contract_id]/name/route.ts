@@ -8,6 +8,7 @@ import { getFTContract } from '@/utils/tokens'
  *   get:
  *     tags: [Fungible Tokens]
  *     description: Returns the name of the fungible token
+ *     summary: Retrieves the name of a specific fungible token.
  *     parameters:
  *      - name: contract_id
  *        in: path

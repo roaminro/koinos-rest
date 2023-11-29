@@ -7,6 +7,7 @@ import { getProvider } from '@/utils/providers'
  *   get:
  *     tags: [Chain]
  *     description: Returns the chain id
+ *     summary: Fetches the unique identifier of the blockchain, commonly known as the chain ID.
  *     parameters:
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:

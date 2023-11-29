@@ -12,6 +12,7 @@ import { NextRequest, NextResponse } from 'next/server'
  *   get:
  *     tags: [Accounts]
  *     description: Returns the transaction history by inputting either a their Koinos address, a system contract name, or a KAP name. Feel free to test the placeholder values and the respective response below before testing out your own data.
+ *     summary: Fetches the transaction history for a specific account.
  *     parameters:
  *      - name: account
  *        in: path
@@ -78,14 +79,10 @@ import { NextRequest, NextResponse } from 'next/server'
  *                            type: string
  *                          header:
  *                            type: object
- *                            properties:
- *                              ... (header properties)
  *                          operations:
  *                            type: array
  *                            items:
  *                              type: object
- *                              properties:
- *                                ... (operation properties)
  *                          signatures:
  *                            type: array
  *                            items:
@@ -113,8 +110,6 @@ import { NextRequest, NextResponse } from 'next/server'
  *                            type: array
  *                            items:
  *                              type: object
- *                              properties:
- *                                ... (event properties)
  *                  seq_num:
  *                    type: string
  *            example:

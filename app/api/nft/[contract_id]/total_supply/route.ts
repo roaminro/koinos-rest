@@ -8,6 +8,7 @@ import { getNFTContract } from '@/utils/tokens'
  *   get:
  *     tags: [Non Fungible Tokens]
  *     description: Returns the total supply of the non fungible token.
+ *     summary: Retrieves the total supply of Non Fungible Tokens issued under a specific contract.
  *     parameters:
  *      - name: contract_id
  *        in: path

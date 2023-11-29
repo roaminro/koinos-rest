@@ -8,6 +8,7 @@ import { getNFTContract } from '@/utils/tokens'
  *   get:
  *     tags: [Non Fungible Tokens]
  *     description: Returns the name of the non fungible token.
+ *     summary: Fetches the name of a specific Non Fungible Token as defined in the contract.
  *     parameters:
  *      - name: contract_id
  *        in: path

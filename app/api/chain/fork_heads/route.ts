@@ -7,6 +7,7 @@ import { getProvider } from '@/utils/providers'
  *   get:
  *     tags: [Chain]
  *     description: Returns the chain's fork heads
+ *     summary: Retrieves the current fork heads of the Koinos blockchain, indicating any divergences in the chain.
  *     parameters:
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:

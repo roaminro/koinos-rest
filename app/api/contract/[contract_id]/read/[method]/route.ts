@@ -8,6 +8,7 @@ import { AppError, handleError, getErrorMessage } from '@/utils/errors'
  *   get:
  *     tags: [Contracts]
  *     description: Read the contract contract using the method and arguments provided
+ *     summary: Executes a specified 'read' method on the given contract and returns the result, without making any state changes.
  *     parameters:
  *      - name: contract_id
  *        in: path

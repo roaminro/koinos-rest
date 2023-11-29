@@ -8,6 +8,7 @@ import { getNFTContract } from '@/utils/tokens'
  *   get:
  *     tags: [Non Fungible Tokens]
  *     description: Returns the URI associated with the non fungible token contract.
+ *     summary: Obtains the Uniform Resource Identifier (URI) for a Non Fungible Token contract, typically pointing to metadata.
  *     parameters:
  *      - name: contract_id
  *        in: path

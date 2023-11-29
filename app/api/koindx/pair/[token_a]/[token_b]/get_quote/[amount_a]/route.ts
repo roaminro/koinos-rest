@@ -7,8 +7,9 @@ import { getProvider } from '@/utils/providers'
  * @swagger
  * /api/koindx/pair/{token_a}/{token_b}/get_quote/{amount_a}:
  *   get:
- *     tags: [Koindx]
+ *     tags: [KoinDX]
  *     description: Returns the quote for a given amount of token A in terms of token B
+ *     summary: Returns the quote for a given amount of token A in terms of token B
  *     parameters:
  *      - name: token_a
  *        in: path

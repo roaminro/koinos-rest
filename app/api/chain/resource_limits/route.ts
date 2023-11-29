@@ -7,6 +7,7 @@ import { getProvider } from '@/utils/providers'
  *   get:
  *     tags: [Chain]
  *     description: Returns the chain's resource limits
+ *     summary: Obtains information about the resource limits and usage for the blockchain, such as computational power and network bandwidth.
  *     parameters:
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:

@@ -8,6 +8,7 @@ import { getNFTContract } from '@/utils/tokens'
  *   get:
  *     tags: [Non Fungible Tokens]
  *     description: Returns the non fungible token's account balance.
+ *     summary: Retrieves the balance of Non Fungible Tokens under a specific contract address for a given account address.
  *     parameters:
  *      - name: contract_id
  *        in: path

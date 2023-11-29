@@ -11,6 +11,7 @@ import protobufjs from 'protobufjs'
  *   get:
  *     tags: [Contracts]
  *     description: Returns the contract's ABI
+ *     summary: Retrieves the ABI (Application Binary Interface) of the specified contract, detailing its methods and protobuf definitions.
  *     parameters:
  *      - name: contract_id
  *        schema:

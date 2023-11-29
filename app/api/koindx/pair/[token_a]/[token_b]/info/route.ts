@@ -8,8 +8,9 @@ import { utils } from 'koilib'
  * @swagger
  * /api/koindx/pair/{token_a}/{token_b}/info:
  *   get:
- *     tags: [Koindx]
+ *     tags: [KoinDX]
  *     description: Returns information about a pair of tokens on koindx.com, including address, total supply, reserves, and other details.
+ *     summary: Returns information about a pair of tokens on koindx.com, including address, total supply, reserves, and other details.
  *     parameters:
  *      - name: token_a
  *        in: path

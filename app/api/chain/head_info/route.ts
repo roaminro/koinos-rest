@@ -7,6 +7,7 @@ import { getProvider } from '@/utils/providers'
  *   get:
  *     tags: [Chain]
  *     description: Returns the chain's head info
+ *     summary: Provides information about the current head of the blockchain, including its height and id.
  *     parameters:
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     responses:

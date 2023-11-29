@@ -9,6 +9,7 @@ import { utils } from 'koilib'
  *   get:
  *     tags: [Accounts]
  *     description: Return the account's available mana.
+ *     summary: Obtains the current mana balance for a specified account.
  *     parameters:
  *      - name: account
  *        in: path

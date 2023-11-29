@@ -48,6 +48,7 @@ const Nav: FC<NavProps> = ({}) => {
         </ActiveLink> */}
 
         <ActiveLink href="/swagger">API</ActiveLink>
+        <ActiveLink href="/api/swagger">OpenAPI Specs</ActiveLink>
       </nav>
     </motion.section>
   )

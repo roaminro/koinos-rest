@@ -7,6 +7,7 @@ import { AppError, getErrorMessage, handleError } from '@/utils/errors'
  *   get:
  *     tags: [Koinos Account Protocol]
  *     description: Returns the address associated with a Koinos Account Protocol (KAP) name
+ *     summary: Fetches the Koinos blockchain address associated with a specific KAP name.
  *     parameters:
  *      - name: name
  *        in: path

@@ -8,6 +8,7 @@ import { getAddress } from '@/utils/addresses'
  *   get:
  *     tags: [Nicknames]
  *     description: Retrieves the owner address associated with a given nickname.
+ *     summary: Fetches the Koinos blockchain address associated with a given nickname.
  *     parameters:
  *      - name: account
  *        in: path

@@ -10,6 +10,7 @@ import { utils } from 'koilib'
  *   get:
  *     tags: [Fungible Tokens]
  *     description: Returns the fungible token balance for a specific account
+ *     summary: Retrieves the balance of a specific fungible token for a given account.
  *     parameters:
  *      - name: contract_id
  *        in: path

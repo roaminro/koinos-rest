@@ -8,6 +8,7 @@ import { getProvider } from '@/utils/providers'
  *   get:
  *     tags: [Accounts]
  *     description: Returns the account's next nonce
+ *     summary: Retrieves the next nonce value for a given account.
  *     parameters:
  *      - name: account
  *        in: path

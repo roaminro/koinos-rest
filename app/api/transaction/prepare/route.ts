@@ -9,6 +9,7 @@ import { NextRequest, NextResponse } from 'next/server'
  *   post:
  *     tags: [Transactions]
  *     description: This endpoint takes a transaction and an optional provider and/or payer, then returns a prepared transaction object.
+ *     summary: Prepares a transaction for submission.
  *     parameters:
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *     requestBody:

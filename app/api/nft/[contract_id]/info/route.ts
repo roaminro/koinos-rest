@@ -9,6 +9,7 @@ import { utils } from 'koilib'
  *   get:
  *     tags: [Non Fungible Tokens]
  *     description: Returns information about the non fungible token, such as its name, symbol, total supply, and URI.
+ *     summary: Provides comprehensive information about a specific Non Fungible Token contract, including such as its name, symbol, total supply, and URI.
  *     parameters:
  *      - name: contract_id
  *        in: path

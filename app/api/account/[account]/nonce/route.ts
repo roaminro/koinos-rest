@@ -8,6 +8,7 @@ import { getProvider } from '@/utils/providers'
  *   get:
  *     tags: [Accounts]
  *     description: Returns the account's nonce
+ *     summary: Fetches the current nonce of a specified account.
  *     parameters:
  *      - name: account
  *        schema:

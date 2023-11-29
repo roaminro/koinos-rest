@@ -10,6 +10,7 @@ import { decodeOperations } from '@/utils/operations'
  *   get:
  *     tags: [Blocks]
  *     description: Input a block id or number. Return data about that block and its receipt.
+ *     summary: Return data about that block and its receipt.
  *     parameters:
  *      - name: block_id
  *        in: path

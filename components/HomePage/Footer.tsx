@@ -41,51 +41,6 @@ const Footer: FC<FooterProps> = ({ optClassName }) => {
             </li>
           </ul>
         </div>
-
-        <div className="py-4">
-          <p className="m-0">
-            <span>
-              <span>2. User-Friendly Interface</span>
-            </span>
-          </p>
-          <ul className="m-0 pl-[27px]">
-            <li className="mb-0">
-              <span>
-                <span>Drag-and-Drop Functionality: Simplifying complex tasks.</span>
-              </span>
-            </li>
-            <li className="mb-0">
-              <span>
-                <span>Interactive Tutorials: Step-by-step guidance for all skill levels.</span>
-              </span>
-            </li>
-          </ul>
-        </div>
-
-        <div className="pt-4">
-          <p className="m-0">
-            <span>
-              <span>3. Robust Security</span>
-            </span>
-          </p>
-          <ul className="m-0 pl-[27px]">
-            <li className="mb-0">
-              <span>
-                <span>
-                  State-of-the-Art Encryption: Protect your data with industry-leading security
-                  measures.
-                </span>
-              </span>
-            </li>
-            <li className="mb-0">
-              <span>
-                <span>
-                  Continuous Updates: Stay ahead of threats with regular security enhancements.
-                </span>
-              </span>
-            </li>
-          </ul>
-        </div>
       </footer>
     </section>
   )

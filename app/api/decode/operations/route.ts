@@ -9,7 +9,7 @@ import { decodeOperations } from '@/utils/operations'
  *   post:
  *     tags: [Decode]
  *     description: This endpoint takes an array of 'encoded' operations and returns an array of 'decoded' operations. Feel free to test the example request body and response below before testing out your own data.
- *
+ *     summary: Decodes and interprets blockchain operations, providing details in a format that is easily understandable.
  *     parameters:
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *

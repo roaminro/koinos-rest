@@ -9,7 +9,7 @@ import { decodeEvents } from '@/utils/events'
  *   post:
  *     tags: [Decode]
  *     description: This endpoint takes an array of "encoded" events and returns an array of "decoded" events. Feel free to test the example request body and response below before testing out your own data.
- *
+ *     summary: Decodes a series of blockchain events, translating them from encoded formats into human-readable forms.
  *     parameters:
  *      - $ref: '#/components/parameters/X-JSON-RPC-URL'
  *

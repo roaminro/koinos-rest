@@ -8,6 +8,7 @@ import { getFTContract } from '@/utils/tokens'
  *   get:
  *     tags: [Fungible Tokens]
  *     description: Returns the number of decimals for a fungible token
+ *     summary: Fetches the decimal precision used by a specific fungible token.
  *     parameters:
  *      - name: contract_id
  *        in: path

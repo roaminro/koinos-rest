@@ -10,6 +10,7 @@ import { interfaces } from 'koilib'
  *   get:
  *     tags: [Transactions]
  *     description: Returns detailed information about a specific transaction.
+ *     summary: Retrieves detailed information about a specific transaction by its ID.
  *     parameters:
  *      - name: transaction_id
  *        in: path
@@ -17,7 +18,7 @@ import { interfaces } from 'koilib'
  *          type: string
  *        description: The unique identifier of the transaction
  *        required: true
- *        example: 0x1220552e1d8798d7174053229c740a9908fffb7b4cbe7b9fff4605943723540a940f
+ *        example: "0x1220552e1d8798d7174053229c740a9908fffb7b4cbe7b9fff4605943723540a940f"
  *      - name: return_receipt
  *        in: query
  *        schema:
@@ -69,8 +70,6 @@ import { interfaces } from 'koilib'
  *                            type: string
  *                          data:
  *                            type: object
- *                            properties:
- *                              # Properties vary based on the operation type
  *                    signatures:
  *                      type: array
  *                      items:

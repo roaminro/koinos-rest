@@ -10,7 +10,7 @@ import { revalidatePath } from 'next/cache'
  *   post:
  *     tags: [Transactions]
  *     description: This endpoint takes a transaction and submits it to the JSON RPC node.
- *
+ *     summary: Submits a prepared transaction to the blockchain network for processing.
  *     parameters:
  *      - name: broadcast
  *        in: query

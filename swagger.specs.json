@@ -26,7 +26,7 @@
       },
       {
         "name": "Blocks",
-        "description": "Encompasses all endpoints related to querying block information on the Koinos blockchain. At time of writing, only used for retrieving block details."
+        "description": "Encompasses all endpoints related to querying block information on the Koinos blockchain."
       },
       {
         "name": "Chain",
@@ -34,23 +34,23 @@
       },
       {
         "name": "Contracts",
-        "description": "Includes endpoints for interacting with smart contracts deployed on the Koinos blockchain, covering contract ABI, reading the contract depending on the method, etc."
+        "description": "Includes endpoints for interacting with smart contracts deployed on the Koinos blockchain, covering contract ABI, reading the contract state, etc."
       },
       {
         "name": "Decode",
-        "description": "Endpoints under the 'Decode' tag are used for decoding encoded blockchain data, such as transactions and event logs, making them human-readable and easier to interpret."
+        "description": "Endpoints under the 'Decode' tag are used for decoding encoded blockchain data, such as operations and event logs, making them human-readable and easier to interpret."
       },
       {
         "name": "Fungible Tokens",
         "description": "Groups endpoints that deal with fungible token operations, including querying token balances, total supply, general information, etc."
       },
       {
-        "name": "Koinos Account Protocol",
-        "description": "Endpoints under the 'Koinos Account Protocol' tag focus on name services within the Koinos network, including retrieving account addresses from names and vice versa."
+        "name": "Koinos Account Protocol (KAP)",
+        "description": "Endpoints under the 'Koinos Account Protocol (KAP)' tag focus on the KAP name, including retrieving account addresses from names and vice versa."
       },
       {
-        "name": "Koindx",
-        "description": "Dedicated to endpoints related to a Koinos decentralized exchange features, covering token pair information, quotes for token swaps, and market data."
+        "name": "KoinDX",
+        "description": "Dedicated to endpoints related to KoinDX features, covering token pair information and quotes for token swaps."
       },
       {
         "name": "Non Fungible Tokens",
@@ -58,224 +58,13 @@
       },
       {
         "name": "Nicknames",
-        "description": "Endpoints under this tag focus on the nickname services within the Koinos blockchain, including querying the nicknames owned by an account and the account associated with a particular nickname."
+        "description": "Endpoints under this tag focus on the 'Nicknames' service, including querying the nicknames owned by an account and the account associated with a particular nickname."
       },
       {
         "name": "Transactions",
-        "description": "Groups endpoints handling transaction-related operations, including querying transaction details, preparing a transaction, and submitting it."
+        "description": "Groups endpoints handling transaction related operations, including querying transaction details, preparing a transaction, and submitting it."
       }
     ],
-
-    "paths": {
-      "/api/account/{account}/balance/{contract_id}": {
-        "get": {
-          "tags": ["Accounts"],
-          "summary": "Retrieves the balance of a specific fungible token for a given account."
-        }
-      },
-      "/api/account/{account}/history": {
-        "get": {
-          "tags": ["Accounts"],
-          "summary": "Fetches the transaction history for a specific account."
-        }
-      },
-      "/api/account/{account}/mana": {
-        "get": {
-          "tags": ["Accounts"],
-          "summary": "Obtains the current mana balance for a specified account."
-        }
-      },
-      "/api/account/{account}/next_nonce": {
-        "get": {
-          "tags": ["Accounts"],
-          "summary": "Retrieves the next nonce value for a given account."
-        }
-      },
-      "/api/account/{account}/nonce": {
-        "get": {
-          "tags": ["Accounts"],
-          "summary": "Fetches the current nonce of a specified account."
-        }
-      },
-
-      "/api/block/{block_id}": {
-        "get": {
-          "tags": ["Blocks"],
-          "summary": "Return data about that block and its receipt."
-        }
-      },
-
-      "/api/chain/fork_heads": {
-        "get": {
-          "tags": ["Chains"],
-          "summary": "Retrieves the current fork heads of the Koinos blockchain, indicating any divergences in the chain."
-        }
-      },
-      "/api/chain/head_info": {
-        "get": {
-          "tags": ["Chains"],
-          "summary": "Provides information about the current head of the blockchain, including its height and id."
-        }
-      },
-      "/api/chain/id": {
-        "get": {
-          "tags": ["Chains"],
-          "summary": "Fetches the unique identifier of the blockchain, commonly known as the chain ID."
-        }
-      },
-      "/api/chain/resource_limits": {
-        "get": {
-          "tags": ["Chains"],
-          "summary": "Obtains information about the resource limits and usage for the blockchain, such as computational power and network bandwidth."
-        }
-      },
-
-      "/api/contract/{contract_id}/abi": {
-        "get": {
-          "tags": ["Contracts"],
-          "summary": "Retrieves the ABI (Application Binary Interface) of the specified contract, detailing its methods and structures."
-        }
-      },
-      "/api/contract/{contract_id}/read/{method}": {
-        "get": {
-          "tags": ["Contracts"],
-          "summary": "Executes a specified 'read' method on the given contract and returns the result, without making any state changes."
-        }
-      },
-
-      "/api/decode/events": {
-        "post": {
-          "tags": ["Decode"],
-          "summary": "Decodes a series of blockchain events, translating them from encoded formats into human-readable forms."
-        }
-      },
-      "/api/decode/operations": {
-        "post": {
-          "tags": ["Decode"],
-          "summary": "Decodes and interprets blockchain operations, providing details in a format that is easily understandable."
-        }
-      },
-
-      "/api/ft/{contract_id}/balance/{account}": {
-        "get": {
-          "tags": ["Fungible Tokens"],
-          "summary": "Retrieves the balance of a specific fungible token for a given account."
-        }
-      },
-      "/api/ft/{contract_id}/decimals": {
-        "get": {
-          "tags": ["Fungible Tokens"],
-          "summary": "Fetches the decimal precision used by a specific fungible token."
-        }
-      },
-      "/api/ft/{contract_id}/info": {
-        "get": {
-          "tags": ["Fungible Tokens"],
-          "summary": "Provides comprehensive information about a specific fungible token, including name, symbol, and total supply."
-        }
-      },
-      "/api/ft/{contract_id}/name": {
-        "get": {
-          "tags": ["Fungible Tokens"],
-          "summary": "Retrieves the name of a specific fungible token."
-        }
-      },
-      "/api/ft/{contract_id}/symbol": {
-        "get": {
-          "tags": ["Fungible Tokens"],
-          "summary": "Fetches the symbol of a specific fungible token."
-        }
-      },
-      "/api/ft/{contract_id}/total_supply": {
-        "get": {
-          "tags": ["Fungible Tokens"],
-          "summary": "Retrieves the total supply of a specific fungible token."
-        }
-      },
-
-      "/api/kap/{account}/names": {
-        "get": {
-          "tags": ["Koinos Account Protocol"],
-          "summary": "Retrieves the KAP names associated with a specific account address."
-        }
-      },
-      "/api/kap/{name}/address": {
-        "get": {
-          "tags": ["Koinos Account Protocol"],
-          "summary": "Fetches the Koinos blockchain address associated with a specific KAP name."
-        }
-      },
-
-      "/api/nft/{contract_id}/balance/{account}": {
-        "get": {
-          "tags": ["Non Fungible Tokens"],
-          "summary": "Retrieves the balance of Non Fungible Tokens under a specific contract address for a given account address."
-        }
-      },
-      "/api/nft/{contract_id}/info": {
-        "get": {
-          "tags": ["Non Fungible Tokens"],
-          "summary": "Provides comprehensive information about a specific Non Fungible Token contract, including such as its name, symbol, total supply, and URI."
-        }
-      },
-      "/api/nft/{contract_id}/name": {
-        "get": {
-          "tags": ["Non Fungible Tokens"],
-          "summary": "Fetches the name of a specific Non Fungible Token as defined in the contract."
-        }
-      },
-      "/api/nft/{contract_id}/symbol": {
-        "get": {
-          "tags": ["Non Fungible Tokens"],
-          "summary": "Retrieves the symbol associated with a specific Non Fungible Token contract."
-        }
-      },
-      "/api/nft/{contract_id}/uri": {
-        "get": {
-          "tags": ["Non Fungible Tokens"],
-          "summary": "Obtains the Uniform Resource Identifier (URI) for a Non Fungible Token contract, typically pointing to metadata."
-        }
-      },
-      "/api/nft/{contract_id}/total_supply": {
-        "get": {
-          "tags": ["Non Fungible Tokens"],
-          "summary": "Retrieves the total supply of Non Fungible Tokens issued under a specific contract."
-        }
-      },
-
-      "/api/nicknames/{account}/address": {
-        "get": {
-          "tags": ["Nicknames"],
-          "summary": "Fetches the Koinos blockchain address associated with a given nickname."
-        }
-      },
-      "/api/nicknames/{account}/names": {
-        "get": {
-          "tags": ["Nicknames"],
-          "summary": "Retrieves a list of nicknames associated with a specific Koinos blockchain account address."
-        }
-      },
-
-      "/api/transaction/{transaction_id}": {
-        "get": {
-          "tags": ["Transactions"],
-          "summary": "Retrieves detailed information about a specific transaction by its ID."
-        }
-      },
-      "/api/transaction/prepare": {
-        "post": {
-          "tags": ["Transactions"],
-          "summary": "Prepares a transaction for submission."
-        }
-      },
-      "/api/transaction/submit": {
-        "post": {
-          "tags": ["Transactions"],
-          "summary": "Submits a prepared transaction to the blockchain network for processing."
-        }
-      }
-    },
-
     "security": []
   }
 }
