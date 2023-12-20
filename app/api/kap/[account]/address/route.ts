@@ -5,7 +5,7 @@ import { AppError, getErrorMessage, handleError } from '@/utils/errors'
  * @swagger
  * /api/kap/{name}/address:
  *   get:
- *     tags: [Koinos Account Protocol]
+ *     tags: [Koinos Account Protocol (KAP)]
  *     description: Returns the address associated with a Koinos Account Protocol (KAP) name
  *     summary: Fetches the Koinos blockchain address associated with a specific KAP name.
  *     parameters:

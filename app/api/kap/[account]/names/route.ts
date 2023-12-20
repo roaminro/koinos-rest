@@ -6,7 +6,7 @@ import { AppError, getErrorMessage, handleError } from '@/utils/errors'
  * @swagger
  * /api/kap/{account}/names:
  *   get:
- *     tags: [Koinos Account Protocol]
+ *     tags: [Koinos Account Protocol (KAP)]
  *     description: Returns the Koinos Account Protocol (KAP) names associated with an account
  *     summary: Retrieves the KAP names associated with a specific account address.
  *     parameters:
