@@ -239,7 +239,10 @@ export async function getContract(contractId: string, throwIfAbiMissing = true) 
   })
 
   // fetch abi from node
-  let abi = await contract.fetchAbi()
+  let abi = await contract.fetchAbi({
+    updateFunctions: false,
+    updateSerializer: false
+  })
 
   if (throwIfAbiMissing && !abi) {
     throw new AppError(`abi not available for contract ${contractId}`)
