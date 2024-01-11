@@ -255,7 +255,7 @@ export async function GET(request: NextRequest, { params }: { params: { account:
         return NextResponse.json(updatedValues)
       }
 
-      return NextResponse.json(values)
+      return NextResponse.json({})
     } catch (error) {
       throw new AppError(getErrorMessage(error as Error))
     }
