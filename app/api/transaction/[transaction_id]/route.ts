@@ -163,7 +163,7 @@ export async function GET(request: Request, { params }: { params: { transaction_
 
     const response = await provider.getTransactionsById([params.transaction_id])
 
-    if (!response.transactions.length) {
+    if (!response.transactions?.length) {
       throw new AppError('transaction does not exist')
     }
 
