@@ -11,6 +11,10 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  if (process.env.MAINTENANCE_MODE === 'ON') {
+    return <div>Under maintenance</div>
+  }
+
   return (
     <html lang="en" className="snap-y snap-mandatory">
       <body className={`${inter.className} no-scrollbar`}>
