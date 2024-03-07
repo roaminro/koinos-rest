@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 // CORS headers for the api endpoints
 const corsHeaders = {
@@ -7,7 +7,12 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type, Authorization'
 }
 
-export function middleware(request: Request) {
+export function middleware(request: NextRequest) {
+  if (process.env.MAINTENANCE_MODE === 'ON') {
+    request.nextUrl.pathname = `/maintenance`
+    return NextResponse.rewrite(request.nextUrl)
+  }
+
   const response = NextResponse.next()
 
   if (request.method === 'OPTIONS') {
