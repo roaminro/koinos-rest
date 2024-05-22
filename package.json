@@ -1,7 +1,7 @@
 {
   "name": "koinos-rest-api",
   "version": "0.1.0",
-  "license": "MIT",
+  "license": "GNU General Public License 3.0",
   "author": "Roamin Ro",
   "contributors": ["Greg Thomas Andes"],
   "repository": "https://github.com/roaminro/koinos-rest",
