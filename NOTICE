@@ -1,0 +1,100 @@
+This application uses the following dependencies that are available under their 
+respective licenses below.
+
+
+The dependency, @fullpage/react-fullpaget, is used under the terms of the GNU 
+General Public License 3.0 license (https://www.gnu.org/licenses/gpl-3.0.en.html) 
+and contains the following attribution notice:
+Copyright 2018-2024 alvarotrigo
+
+---------------------------------------------------------
+
+The dependency, swagger-ui-react, is used under the terms of the Apache-2.0 license 
+(https://opensource.org/licenses/Apache-2.0) and contains the following attribution 
+notice:
+Copyright 2020-2021 SmartBear Software Inc.
+
+---------------------------------------------------------
+
+Dependencies under the MIT License (https://opensource.org/licenses/MIT) are: 
+
+* @roamin/koinos-pb-to-proto
+   Copyright (c) 2022-2023 Roamin Ro
+
+* @koinos/proto-js
+   Copyright 2020-2021 Koinos Group, LLC  
+
+* @koindx/v2-sdk
+   Copyright (c) 2023 KoinDX Labs Inc.
+
+* @nextui-org/react
+   Copyright (c) 2020 Next UI 
+
+* bignumber.js
+   Copyright (c) 2023 Michael Mclaughlin  
+
+* encoding
+   Copyright (c) 2012-2014 Andris Reinman 
+
+* framer-motion
+   Copyright (c) 2018 Framer B.V.
+
+* ioredis
+   Copyright (c) 2015-2022 Zihua Li 
+
+* koilib
+   Copyright (c) 2021 Julián González 
+
+* next
+   Copyright (c) 2024 Vercel, Inc.
+
+* next-swagger-doc
+   Copyright (c) 2021 Huynh Duc Dung
+
+* react
+   Copyright (c) Meta Platforms, Inc. and affiliates. 
+
+* react-dom
+   Copyright (c) Meta Platforms, Inc. and affiliates. 
+
+* redis
+   Copyright (c) 2022-2023 Redis, Inc.
+
+---------------------------------------------------------
+
+This library also uses the two dependencies,
+
+* protobufjs 
+   Copyright (c) 2016, Daniel Wirtz. All rights reserved.
+
+* qs  
+   Copyright (c) 2014, Nathan LaFreniere and other contributors. All rights reserved.
+
+under the terms of the following license:
+
+BSD 3-Clause License
+
+Redistribution and use in source and binary forms, with or without modification, are 
+permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list 
+   of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice, this 
+   list of conditions and the following disclaimer in the documentation and/or other 
+   materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its contributors may be 
+   used to endorse or promote products derived from this software without specific 
+   prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY 
+EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT 
+SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, 
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED 
+TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR 
+BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN 
+ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
+DAMAGE.
